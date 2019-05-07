@@ -1,16 +1,14 @@
 const Discord = require("discord.js");
 const fs = require("fs");
-//const xp = require("../xp.json");
-//const mysql = require('mysql');
-//const file = require('../mysql.json');
 const customisation = require('../customisation.json');
+const settings = require('../settings.json')
+const db = require('quick.db');
 
 exports.run = async (client, message, args) => {
+  let stats = await db.fetch(`xpstatus_${message.guild.id}`)
+  if(!stats || stats ==='off') return message.reply("XP gain for this server is OFF");
   const Xp = require('../models/xp.js')
   let user = message.author || message.mentions.users.first();
-  //let user =  message.mentions.users.first().id
-  //if (!user) user = message.author.id 
-  //if(!user) user = message.guild.members.get(args[1]);
   Xp.findOne({
     userID: user.id,
     serverID: message.guild.id,

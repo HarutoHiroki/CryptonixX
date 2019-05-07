@@ -29,8 +29,15 @@ exports.run = async (bot, message, args, prefix) => {
             .setDescription(`Antilink is now turned On`)
             .setFooter(`© Cryptonix X Mod Bot by ${customisation.ownername}`);
             message.channel.send({embed});
+    }else{
+      if(args[0] === 'stats'){
+        let stats = await db.fetch(`antilink_${message.guild.id}`)
+        if(!stats || stats ==='off') return message.reply("Anti-link for this server is OFF");
+        if(stats ==='on') return message.reply("Anti-link for this server is ON");
+      
   }else{
       message.reply(`Usage: [p]antilink on|off \n([p] is the current prefix)`)
+  }
   }
 }
 }
