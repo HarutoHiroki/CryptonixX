@@ -1,3 +1,0 @@
-{
-    "ignore": ["warnings/*.json", "prefixes/*.json", "blacklist/*.json"]
-}
