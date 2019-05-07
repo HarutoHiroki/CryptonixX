@@ -1,0 +1,61 @@
+{
+  "name": "cryptonix-x-mod-bot",
+  "version": "2.1.1",
+  "description": "Mod Bot",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "warnings/*.json",
+      "prefixes/*.json",
+      "blacklist/*.json"
+    ]
+  },
+  "author": "That1GoogleBoi",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "chalk": "^2.4.2",
+    "child_process": "^1.0.2",
+    "dblapi.js": "^2.3.0",
+    "demojijs": "^1.2.0",
+    "discord-akairo": "^7.5.5",
+    "discord.js": "^11.4.2",
+    "dotenv": "^7.0.0",
+    "ffmpeg": "0.0.4",
+    "ffmpeg-binaries": "^4.0.0",
+    "google": "^2.1.0",
+    "heroku": "^7.22.4",
+    "http": "0.0.0",
+    "listenmoe.js": "0.0.3",
+    "lodash": "^4.17.11",
+    "lodash.set": "^4.3.2",
+    "lodash.unset": "^4.5.2",
+    "moment": "^2.24.0",
+    "mongoose": "^5.4.19",
+    "ms": "^2.1.1",
+    "mysql": "^2.16.0",
+    "nekos.life": "^2.0.4",
+    "node-opus": "^0.3.1",
+    "node-superfetch": "^0.1.9",
+    "opusscript": "0.0.6",
+    "os-utils": "0.0.14",
+    "pm2": "^3.4.0",
+    "prism": "^4.1.2",
+    "random-puppy": "^1.1.0",
+    "request": "^2.88.0",
+    "return-deep-diff": "^0.3.0",
+    "simple-youtube-api": "^5.1.1",
+    "sqlite": "^3.0.2",
+    "sqlite3": "^4.0.6",
+    "superagent": "^4.1.0",
+    "urban": "^0.3.2",
+    "ytdl-core": "^0.29.1",
+    "ytdl-core-discord": "^1.0.3"
+  },
+  "engines": {
+    "node": "10.9.0"
+  }
+}
