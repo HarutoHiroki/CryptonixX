@@ -52,73 +52,79 @@ function getRandomInt(max) {
   return Math.floor(Math.random() * Math.floor(max));
 }
 if (!message.content.startsWith(prefix)){
-if (parseInt(getRandomInt(3)) == 2) {
-Coins.findOne({
-  userID: message.author.id,
-  serverID: message.guild.id,
-}, (err, coins) => {
-  if (err) console.error(err);
-  if (!coins) {
-      const newCoins = new Coins({
-          _id: mongoose.Types.ObjectId(),
-          userID: message.author.id,
-          serverID: message.guild.id,
-          coins: generatecoins(),
-      });
-
-      newCoins.save()
-          .then(result => console.log(result))
-          .catch(err => console.error(err));
-  }else{
-      coins.coins = parseInt(coins.coins) + parseInt(generatecoins());
-      coins.save()
-          .then(result => console.log(result))
-          .catch(err => console.error(err));
-  }
-})
-}else if (parseInt(getRandomInt(3)) == 3) {
-    Xp.findOne({
-      userID: message.author.id,
-      serverID: message.guild.id,
-    }, (err, xp) => {
-      if (err) console.error(err);
-      if (!xp) {
-          const newXp = new Xp({
-              _id: mongoose.Types.ObjectId(),
-              userID: message.author.id,
-              serverID: message.guild.id,
-              level: 1,
-              xp: generatexp(),
-          });
-    
-          newXp.save()
-              .then(result => console.log(result))
-              .catch(err => console.error(err));
-      }else{
-          xp.xp = parseInt(xp.xp) + parseInt(generatexp());
-          xp.save()
-              .then(result => console.log(result))
-              .catch(err => console.error(err));
-          let nxtLvl = xp.level * 1000 + 1000;
-          if(nxtLvl <= xp.xp) {
-            xp.level = parseInt(xp.level) + 1;
-            xp.save()
+  
+  if (parseInt(getRandomInt(3)) == 2) {
+  Coins.findOne({
+    userID: message.author.id,
+    serverID: message.guild.id,
+  }, (err, coins) => {
+    if (err) console.error(err);
+    if (!coins) {
+        const newCoins = new Coins({
+            _id: mongoose.Types.ObjectId(),
+            userID: message.author.id,
+            serverID: message.guild.id,
+            coins: generatecoins(),
+        });
+      
+        newCoins.save()
             .then(result => console.log(result))
             .catch(err => console.error(err));
-    let embed =  new Discord.RichEmbed()
-    .setTitle(`${message.author.username} HAS LEVELED UP!`, ``)
-    .setThumbnail(`${message.author.avatarURL}`)
-    .setURL(`${message.author.avatarURL}`)
-    .setAuthor("LEVEL UP!")
-    .setTimestamp()
-    .setColor(Math.floor(Math.random()*16777215))
-    .addField("XP", xp.xp)
-    .addField("Level", xp.level)
-    .setFooter(`© Cryptonix X Mod Bot by ${customisation.ownername}`);
-    message.channel.send({embed}).then(message => {message.delete(10000)});
-              }
+    }else{
+        coins.coins = parseInt(coins.coins) + parseInt(generatecoins());
+        coins.save()
+            .then(result => console.log(result))
+            .catch(err => console.error(err));
+    }
+    })
+    }else if (parseInt(getRandomInt(3)) == 3) {
+      let xpstatus = await db.fetch(`xpstatus_${message.guild.id}`);
+      if (xpstatus){
+        if (xpstatus === 'on'){
+          Xp.findOne({
+            userID: message.author.id,
+            serverID: message.guild.id,
+          }, (err, xp) => {
+            if (err) console.error(err);
+            if (!xp) {
+                const newXp = new Xp({
+                    _id: mongoose.Types.ObjectId(),
+                    userID: message.author.id,
+                    serverID: message.guild.id,
+                    level: 1,
+                    xp: generatexp(),
+                });
+              
+                newXp.save()
+                    .then(result => console.log(result))
+                    .catch(err => console.error(err));
+            }else{
+                xp.xp = parseInt(xp.xp) + parseInt(generatexp());
+                xp.save()
+                    .then(result => console.log(result))
+                    .catch(err => console.error(err));
+                let nxtLvl = xp.level * 1000 + 1000;
+                if(nxtLvl <= xp.xp) {
+                  xp.level = parseInt(xp.level) + 1;
+                  xp.save()
+                  .then(result => console.log(result))
+                  .catch(err => console.error(err));
+          let embed =  new Discord.RichEmbed()
+          .setTitle(`${message.author.username} HAS LEVELED UP!`, ``)
+          .setThumbnail(`${message.author.avatarURL}`)
+          .setURL(`${message.author.avatarURL}`)
+          .setAuthor("LEVEL UP!")
+          .setTimestamp()
+          .setColor(Math.floor(Math.random()*16777215))
+          .addField("XP", xp.xp)
+          .addField("Level", xp.level)
+          .setFooter(`© Cryptonix X Mod Bot by ${customisation.ownername}`);
+          message.channel.send({embed}).then(message => {message.delete(10000)});
+                    }
+            }
+        })
       }
-  })
+    }
   }
 }
 let antilink = await db.fetch(`antilink_${message.guild.id}`);
