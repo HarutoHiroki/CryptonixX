@@ -1,1 +1,7 @@
 package-lock.json
+/.vscode/*
+/backup shits/*
+/botsettings/*
+/new shit/*
+/node_modules/*
+/spare commands/*
