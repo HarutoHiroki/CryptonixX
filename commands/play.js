@@ -16,6 +16,7 @@ exports.run = async (client, message) => {
 	const args = message.content.split(' ');
 	const searchString = args.slice(1).join(' ');
 	const url = args[1] ? args[1].replace(/<(.+)>/g, '$1') : '';
+	//if (client.guild.voiceConnection)
 	if (message.member.voiceChannel) {
 			message.member.voiceChannel.join()
 		const permissions = message.member.voiceChannel.permissionsFor(message.client.user);

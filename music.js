@@ -16,8 +16,16 @@ module.exports = {
     async handleVideo(video, message, voiceChannel, playlist = false) {
         async function play(guild, song) {
             const serverQueue = queue.get(guild.id);
+
+            if(voiceChannel.members.size === 1){
+                message.channel.send("No one listening, Leaving voice.")
+                serverQueue.voiceChannel.leave();
+                queue.delete(guild.id);
+                return;
+            }
         
             if (!song) {
+                message.channel.send("Queue ended, Leaving voice.")
                 serverQueue.voiceChannel.leave();
                 queue.delete(guild.id);
                 return;
@@ -26,8 +34,8 @@ module.exports = {
         
             const dispatcher = serverQueue.connection.playOpusStream(await ytdl(song.url))
                 .on('end', async reason => {
-                    if (reason === 'Stream is not generating quickly enough.') console.log('Song ended.');
-                    else console.log(reason);
+                    if (reason === 'Stream is not generating quickly enough.') //console.log('Song ended.');
+                    //delse console.log(reason);
                     if (serverQueue.loop === true) await serverQueue.songs.push(song)
                     serverQueue.songs.shift();
                     play(guild, serverQueue.songs[0]);

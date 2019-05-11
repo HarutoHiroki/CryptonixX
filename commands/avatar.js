@@ -1,21 +1,21 @@
 const Discord =  require('discord.js');
 const customisation = require('../customisation.json');
-exports.run = (client, msg, args) => {
-    let avatar = msg.mentions.users.size ? msg.mentions.users.first().avatarURL : msg.author.avatarURL;
-    if (msg.mentions.users.size > 0) {
+exports.run = (client, message, args) => {
+    let avatar = message.mentions.users.size ? message.mentions.users.first().avatarURL : message.author.avatarURL;
+    if (message.mentions.users.size > 0) {
       const embed = new Discord.RichEmbed()
         .setColor(0xFFFF00)
-        .setTitle(`Avatar for ${msg.mentions.users.first().username}:`)
-        .setImage(`${avatar}`)
+        .setTitle(`Avatar for ${message.mentions.users.first().username}:`)
+        .setImage(`${avatar + "?size=1024"}`)
         .setFooter(`© Cryptonix X Mod Bot by ${customisation.ownername}`);
-        msg.channel.send({embed});
+        message.channel.send({embed});
     } else {
       const embed = new Discord.RichEmbed()
       .setColor(0xFFFF00)
-      .setTitle(`Avatar for ${msg.author.username}:`)
-      .setImage(`${avatar}`)
+      .setTitle(`Avatar for ${message.author.username}:`)
+      .setImage(`${avatar + "?size=1024"}`)
       .setFooter(`© Cryptonix X Mod Bot by ${customisation.ownername}`);
-      msg.channel.send({embed});
+      message.channel.send({embed});
     }
 }
 
