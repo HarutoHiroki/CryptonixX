@@ -54,7 +54,7 @@ client.on("guildCreate", guild => {
 
   let channel = client.channels.get(guild.systemChannelID || channelID);
   channel.send(`Thanks for inviting me into this server! Please do /info and /help for the informations you WILL need in order for the bot to work properly. Do /suggest or /bug if there's any suggestions or bug you found. THANKS`);
-  channel.send("Join me in the Developer's server https://discord.gg/VCdNdnc");
+  channel.send("Join me in the Developer's server https://discord.gg/2NQbbPN");
 
   let blacklist = JSON.parse(fs.readFileSync("./blacklist.json", "utf8"));
     client.guilds.forEach((guild) => {
