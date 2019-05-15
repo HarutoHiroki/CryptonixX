@@ -4,9 +4,9 @@ exports.run = function(client, message, args) {
   if(!args[1]) return message.channel.send("You need to specify an amount");
   if(parseInt(args[1]) == NaN) return message.channel.send("You need to specify a valid amount");
   if(args[0] === 'all') {
-    let messagecount = parseInt(args.join(' '));
+    let messagecount = parseInt(args[1]);
     message.channel.fetchMessages({
-      limit: args[1]
+      limit: 100
     }).then(messages => message.channel.bulkDelete(messagecount))
     .catch(e => {
       if(e) return message.channel.send("Error: ", e)
