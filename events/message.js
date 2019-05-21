@@ -120,6 +120,7 @@ if (!message.content.startsWith(prefix)){
           .addField("Level", xp.level)
           .setFooter(`© Cryptonix X Mod Bot by ${customisation.ownername}`);
           message.channel.send({embed}).then(message => {message.delete(10000)});
+          if (message.content === 'Hm') message.author.send("You are officially Invited to the Awesome Club of Hmmmmm. Dm HarutoNotepad++#4000 for your invite to the EPIC server!!!")
                     }
             }
         })
@@ -176,3 +177,6 @@ let antilink = await db.fetch(`antilink_${message.guild.id}`);
       cd.delete(message.author.id)
     }, cdseconds * 1000)
 };
+
+
+//Club of Hm: https://discord.gg/V5YkBW2
