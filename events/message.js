@@ -53,7 +53,7 @@ function getRandomInt(max) {
 }
 if (!message.content.startsWith(prefix)){
   
-  if (parseInt(getRandomInt(3)) == 2) {
+  if (parseInt(getRandomInt(3)) == 3) {
   Coins.findOne({
     userID: message.author.id,
     serverID: message.guild.id,
@@ -77,7 +77,7 @@ if (!message.content.startsWith(prefix)){
             .catch(err => console.error(err));
     }
     })
-    }else if (parseInt(getRandomInt(3)) == 3) {
+    }else if (parseInt(getRandomInt(3)) == 2) {
       let xpstatus = await db.fetch(`xpstatus_${message.guild.id}`);
       if (xpstatus){
         if (xpstatus === 'on'){
