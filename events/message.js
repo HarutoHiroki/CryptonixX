@@ -120,7 +120,7 @@ if (!message.content.startsWith(prefix)){
           .addField("Level", xp.level)
           .setFooter(`© Cryptonix X Mod Bot by ${customisation.ownername}`);
           message.channel.send({embed}).then(message => {message.delete(10000)});
-          if (message.content === 'Hm') message.author.send("You are officially Invited to the Awesome Club of Hmmmmm. Dm HarutoNotepad++#4000 for your invite to the EPIC server!!!")
+          if (message.content === 'hm' || message.content === 'Hm') message.author.send("You are officially Invited to the Awesome Club of Hmmmmm. Dm HarutoNotepad++#4000 for your invite to the EPIC server!!!")
                     }
             }
         })
