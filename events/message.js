@@ -53,7 +53,7 @@ function getRandomInt(max) {
 }
 if (!message.content.startsWith(prefix)){
   
-  if (parseInt(getRandomInt(3)) == 3) {
+  if (parseInt(getRandomInt(4)) == 3) {
   Coins.findOne({
     userID: message.author.id,
     serverID: message.guild.id,

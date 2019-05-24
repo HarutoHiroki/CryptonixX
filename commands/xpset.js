@@ -10,7 +10,7 @@ exports.run = async (client, message, args) => {
   const Xp = require('../models/xp.js')
   if(message.author.id !== settings.ownerid) return message.channel.send(`${message.author}, ${customisation.ownercmdfailtext}`);
   if(!args[1]) return message.channel.send("You need to specify an ammount");
-  let user = message.author || message.mentions.users.first()
+  let user = message.mentions.users.first() || message.author
   Xp.findOne({
     userID: user.id,
     serverID: message.guild.id,
@@ -19,7 +19,7 @@ exports.run = async (client, message, args) => {
     if (!xp) {
         const newXp = new Xp({
             _id: mongoose.Types.ObjectId(),
-            userID: message.author.id,
+            userID: user.id,
             serverID: message.guild.id,
             level: 1,
             xp: args[1],
