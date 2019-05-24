@@ -30,5 +30,5 @@ exports.conf = {
 exports.help = {
   name: 'addrole',
   description: 'Adds a role. It\'s that simple.',
-  usage: 'addrole'
+  usage: 'addrole [mention] [role name (don\'t mention the role)]'
 };
