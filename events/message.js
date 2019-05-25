@@ -63,7 +63,6 @@ if (!message.content.startsWith(prefix)){
         const newCoins = new Coins({
             _id: mongoose.Types.ObjectId(),
             userID: message.author.id,
-            serverID: message.guild.id,
             coins: generatecoins(),
         });
       

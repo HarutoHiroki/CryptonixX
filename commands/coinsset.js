@@ -13,15 +13,13 @@ exports.run = async (client, message, args) => {
   if(!args[1]) return message.channel.send("You need to specify an ammount");
 
   Coins.findOne({
-    userID: user.id,
-    serverID: message.guild.id,
+    userID: user.id
   }, (err, coins) => {
     if (err) console.error(err);
     if (!coins) {
         const newCoins = new Coins({
             _id: mongoose.Types.ObjectId(),
             userID:user.id,
-            serverID: message.guild.id,
             coins: args[1],
         });
   
