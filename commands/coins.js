@@ -6,8 +6,7 @@ exports.run = async (client, message, args) => {
   const Coins = require('../models/coins.js');
   let user = message.author.id || message.mentions.users.first().id
 Coins.findOne({
-  userID: user,
-  serverID: message.guild.id,
+  userID: user
 }, (err, coins) => {
   if (err) console.error(err);
   if (!coins) {
