@@ -7,7 +7,7 @@ exports.run = (client, message, args) => {
   if(!args[0]){
       if (message.author.id === settings.ownerid) {  
         const embed = new Discord.RichEmbed()
-        .addField("All commands have been migrated to here:", "https://harutohiroki.github.io/commands.html")
+        .addField("All commands have been migrated to here: (mobile not supported, yet.)", "https://harutohiroki.github.io/commands.html")
         .addField("For more info about a specific Command:", "Use [prefix]help command_name")
         .addField('Bot Owner Commands', help.helpMsg4)
         .setFooter(`© Cryptonix X Mod Bot by ${customisation.ownername}`);
