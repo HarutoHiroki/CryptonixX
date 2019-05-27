@@ -8,7 +8,7 @@ exports.run = (client, message, args) => {
     let name = message.content.split(" ").splice(2).join(" ");
     let role = message.guild.roles.find("name", name);
     member.removeRole(role).catch(e => {
-        message.channel.send(":no_entry_sign: There was an error! It most likely is that the role you are trying to add is higher than the the role I have!");
+        return message.channel.send(":no_entry_sign: There was an error! It most likely is that the role you are trying to remove is higher than the the role I have!");
     });
     message.channel.send(`:white_check_mark: **${message.author.username}**, I've removed the **${name}** role from **${message.mentions.users.first().username}**.`);
 }
