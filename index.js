@@ -52,19 +52,25 @@ client.on("guildCreate", guild => {
       }
   }
 
-  let channel = client.channels.get(guild.systemChannelID || channelID);
-  channel.send(`Thanks for inviting me into this server! Please do /info and /help for the informations you WILL need in order for the bot to work properly. Do /suggest or /bug if there's any suggestions or bug you found. THANKS`);
-  channel.send("Join me in the Developer's server https://discord.gg/2NQbbPN");
-
-  let blacklist = JSON.parse(fs.readFileSync("./blacklist.json", "utf8"));
-    client.guilds.forEach((guild) => {
-      if (!blacklist[guild.ownerID]) return
-      if(blacklist[guild.ownerID].state === true) {
-        message.channel.send("But UNFORTUNATELY, the owner of this server has been blacklisted before so I'm LEAVING! Bye!")
-        message.guild.leave(guild.id)
-      }
-    })
+  let owner = client.guilds.get(guild.ownerID)
+  if(owner !== settings.ownerid){
+    let channel = client.channels.get(guild.systemChannelID || channelID);
+    let botCount = client.guilds.get(guild.members.filter(m => m.user.bot).size)
+    if (botCount >= 9) return guild.leave()
+    channel.send(`Thanks for inviting me into this server! Please do /info and /help for the informations you WILL need in order for the bot to work properly. Do /suggest or /bug if there's any suggestions or bug you found. THANKS`);
+    channel.send("Join me in the Developer's server https://discord.gg/2NQbbPN");
+  
+    let blacklist = JSON.parse(fs.readFileSync("./blacklist.json", "utf8"));
+      client.guilds.forEach((guild) => {
+        if (!blacklist[guild.ownerID]) return
+        if(blacklist[guild.ownerID].state === true) {
+          message.channel.send("But UNFORTUNATELY, the owner of this server has been blacklisted before so I'm LEAVING! Bye!")
+          message.guild.leave(guild.id)
+        }
+      })
+  }
 });
+
 //command reload
 client.reload = command => {
   //if(message.author.id !=="242263403001937920") return message.channel.send(`**»** ${message.author}, you don't have permission to do that❌`);
