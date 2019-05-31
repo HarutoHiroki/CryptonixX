@@ -87,21 +87,6 @@ client.reload = command => {
   });
 };
 
-//connect to MySQL database
-//var con = mysql.createConnection({
-//  host: file.SQL_host,
-//  user: file.SQL_user,
-//  password: file.SQL_password,
-//  database: file.SQL_database
-//
-//});
-//
-//con.connect(err => {
-//  if(err) throw err;
-//  console.log(chalk.bgGreen.black("Connected to MySQL database!"));
-//  
-//});
-
 mongoose.connect('mongodb://localhost:27017/DiscordDB', { useNewUrlParser: true }, err => {
     if (err) return console.error(err);
     console.log(chalk.bgGreen.black('Connected to MongoDB database!'));
@@ -111,7 +96,7 @@ mongoose.connect('mongodb://localhost:27017/DiscordDB', { useNewUrlParser: true 
     let autoRole = await db.fetch(`autorole_${member.guild.id}`);
     if (!autoRole) return;
     if (autoRole === 'none') return;
-    let autorole = member.guild.roles.find('name', autoRole);
+    let autorole = member.guild.roles.get('name', autoRole);
     member.addRole(autorole);
 });
 
@@ -119,13 +104,13 @@ mongoose.connect('mongodb://localhost:27017/DiscordDB', { useNewUrlParser: true 
 client.elevation = message => {
   if (message.channel.type === 'dm') return;
   let permlvl = 0;
-  let mod_role = message.guild.roles.find('name', settings.modrolename);
+  let mod_role = message.guild.roles.get('name', settings.modrolename);
   if (mod_role && message.member.roles.has(mod_role.id)) permlvl = 1;
-  let admin_role = message.guild.roles.find('name', settings.adminrolename);
+  let admin_role = message.guild.roles.get('name', settings.adminrolename);
   if (admin_role && message.member.roles.has(admin_role.id)) permlvl = 2;
-  let manager_role = message.guild.roles.find('name', settings.managerrolename);
+  let manager_role = message.guild.roles.get('name', settings.managerrolename);
   if (manager_role && message.member.roles.has(manager_role.id)) permlvl = 3;
-  let overlord_role = message.guild.roles.find('name', settings.overlordrolename)
+  let overlord_role = message.guild.roles.get('name', settings.overlordrolename)
   if (overlord_role && message.member.roles.has(overlord_role.id)) permlvl = 4;
   if (message.author.id === settings.ownerid) permlvl = 5;
   return permlvl;

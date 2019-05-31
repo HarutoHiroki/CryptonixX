@@ -4,7 +4,7 @@ exports.run = (client, message, args, data, errors) => {
     childProcess.exec(args.join(' '), {},
         (err, stdout, stderr) => {
             if (err) return message.channel.sendCode('', err.message);
-            message.channel.sendCode('', stdout);
+            message.channel.send('', stdout);
         });
 }
 
