@@ -16,14 +16,22 @@ module.exports = async message => {
   let blacklist = JSON.parse(fs.readFileSync("./blacklist.json", "utf8"));
 
   if(message.guild.id === '264445053596991498') return
-  //setInterval(() => {
   let channelignore = await db.fetch(`channelignore_${message.guild.id}_${message.channel.id}`);
   if (channelignore){
     if (!message.member.hasPermission("MANAGE_ROLES_OR_PERMISSIONS")){
       if (channelignore === 'on') return
     }
   }
-  //},1000);
+    let owner = message.guild.ownerID
+    if(owner !== settings.ownerid){
+      if(message.guild.id === '264445053596991498') return
+      let botCount = message.guild.members.filter(m => m.user.bot).size
+      let memCount = message.guild.members.filter(m => !m.user.bot).size
+      if (memCount < 5 || botCount >= 9){ 
+        message.guild.owner.send("This server have too much bots (9+) or has too few members. Try again later!")
+        return message.guild.leave()
+      }
+    }
 
   if (!blacklist[message.author.id]) { 
     blacklist[message.author.id] = {state: false}};

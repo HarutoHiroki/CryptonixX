@@ -33,19 +33,9 @@ fs.readdir('./commands/', (err, files) => {
   });
 });
 
-client.on('ready', guild => {
+client.on('ready', () => {
   setInterval(() => {
     dbl.postStats(client.guilds.size);
-    let owner = client.guilds.get(guild.ownerID)
-    if(owner !== settings.ownerid){
-      if(guild.id === '264445053596991498') return
-      let botCount = client.guilds.get(guild.members.filter(m => m.user.bot).size)
-      let memCount = client.guilds.get(guild.members.filter(m => !m.user.bot).size)
-      if (memCount < 5 || botCount >= 9){ 
-        guild.owner.send("This server have too much bots (9+) or has too few members. Try again later!")
-        return guild.leave()
-      }
-    }
   }, 60000);
 });
 
@@ -62,11 +52,14 @@ client.on("guildCreate", guild => {
   }
 
   let owner = client.guilds.get(guild.ownerID)
+  console.log(owner)
   if(owner !== settings.ownerid){
     if(guild.id === '264445053596991498') return
     let channel = client.channels.get(guild.systemChannelID || channelID);
-    let botCount = client.guilds.get(guild.members.filter(m => m.user.bot).size)
-    let memCount = client.guilds.get(guild.members.filter(m => !m.user.bot).size)
+    let botCount = client.guilds.get(guild.id).members.filter(m => m.user.bot).size
+    console.log(botCount)
+    let memCount = client.guilds.get(guild.id).members.filter(m => !m.user.bot).size
+    console.log(memCount)
     if (memCount < 5 || botCount >= 9){ 
       guild.owner.send("This server have too much bots (9+) or has too few members. Try again later!")
       return guild.leave()
