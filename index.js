@@ -33,10 +33,19 @@ fs.readdir('./commands/', (err, files) => {
   });
 });
 
-client.on('ready', () => {
+client.on('ready', guild => {
   setInterval(() => {
     dbl.postStats(client.guilds.size);
-    //client.user.setPresence({ game: { name: `${activities[Math.floor(Math.random() * activities.length)]}`, type: 1, url: "https://www.twitch.tv/hiroaki_haruto" }})
+    let owner = client.guilds.get(guild.ownerID)
+    if(owner !== settings.ownerid){
+      if(guild.id === '264445053596991498') return
+      let botCount = client.guilds.get(guild.members.filter(m => m.user.bot).size)
+      let memCount = client.guilds.get(guild.members.filter(m => !m.user.bot).size)
+      if (memCount < 5 || botCount >= 9){ 
+        guild.owner.send("This server have too much bots (9+) or has too few members. Try again later!")
+        return guild.leave()
+      }
+    }
   }, 60000);
 });
 
@@ -54,9 +63,14 @@ client.on("guildCreate", guild => {
 
   let owner = client.guilds.get(guild.ownerID)
   if(owner !== settings.ownerid){
+    if(guild.id === '264445053596991498') return
     let channel = client.channels.get(guild.systemChannelID || channelID);
     let botCount = client.guilds.get(guild.members.filter(m => m.user.bot).size)
-    if (botCount >= 9) return guild.leave()
+    let memCount = client.guilds.get(guild.members.filter(m => !m.user.bot).size)
+    if (memCount < 5 || botCount >= 9){ 
+      guild.owner.send("This server have too much bots (9+) or has too few members. Try again later!")
+      return guild.leave()
+    }
     channel.send(`Thanks for inviting me into this server! Please do /info and /help for the informations you WILL need in order for the bot to work properly. Do /suggest or /bug if there's any suggestions or bug you found. THANKS`);
     channel.send("Join me in the Developer's server https://discord.gg/2NQbbPN");
   
