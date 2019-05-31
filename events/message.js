@@ -161,8 +161,7 @@ let antilink = await db.fetch(`antilink_${message.guild.id}`);
       }
       //message.react("a:yayyy:497742636439044096")
       cmd.run(client, message, params, perms);
-      console.log("Command: /" + cmd.help.name)
-      console.log("Guild: " + message.guild.name)
+      console.log("Command: /" + cmd.help.name + " - Guild: " + message.guild.name)
       if (message.author.id !== "242263403001937920"){
         if(cd.has(message.author.id)){
           message.delete();
