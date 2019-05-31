@@ -8,7 +8,7 @@ exports.run = async (client, message, args) => {
     if(!tomute) return message.reply("Couldn't find dat boi.");
     if(message.author.id === message.mentions.users.first()) return message.reply("You can't mute yourself:facepalm:");
     if(!message.member.hasPermission("MANAGE_MESSAGES")) return message.reply("You don't have the permission to do that:facepalm:");
-    let muteRole = message.guild.roles.find(`name`, "Muted");
+    let muteRole = message.guild.roles.get(`name`, "Muted");
     if (!muteRole) {
         try {
             muteRole = await message.guild.createRole({

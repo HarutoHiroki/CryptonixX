@@ -37,7 +37,7 @@ exports.run = async (client, message, args) => {
   message.channel.send({embed});
 
   if(warns[`${user.id}, ${message.guild.id}`].warns == 2){
-    let muteRole = message.guild.roles.find('name', 'Muted')
+    let muteRole = message.guild.roles.get('name', 'Muted')
 
     let mutetime = "60s";
     message.guild.members.get(user.id).addRole(muteRole.id);

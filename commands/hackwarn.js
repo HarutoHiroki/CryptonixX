@@ -38,7 +38,7 @@ exports.run = (client, message, args) => {
   .addField('Logged in:', '<#' + logchannel.id +'>')
   .setFooter(`© Cryptonix X Mod Bot by ${customisation.ownername}`);
 
-  let logchannel = message.guild.channels.find('name', 'logs');
+  let logchannel = message.guild.channels.get('name', 'logs');
     if  (!logchannel){
       
       message.channel.send({embed})

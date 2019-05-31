@@ -10,7 +10,7 @@ exports.run = (client, message, args, func) => {
             message.channel.send("Success, Cleared Auto-Role list")
         })
     }else{
-        if(!message.guild.roles.find('name', args.join(" "))) return message.channel.send(`${args.join(" ")} is not a valid role!`)
+        if(!message.guild.roles.get('name', args.join(" "))) return message.channel.send(`${args.join(" ")} is not a valid role!`)
         db.set(`autorole_${message.guild.id}`, args.join(' '))
         message.channel.send(`Role updated!`)
     }

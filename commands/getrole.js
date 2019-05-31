@@ -15,7 +15,7 @@ exports.run = async (client, message, args, prefix) => {
                 message.reply("That is not a self-assignable role")
                 return
             }else{
-                rolename = message.guild.roles.find("name", args[0])
+                rolename = message.guild.roles.get("name", args[0])
                 member.addRole(rolename).catch(e => {
                     return message.channel.send(`❌**Error:**\n${e}`);
                 });

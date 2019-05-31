@@ -17,7 +17,7 @@ exports.run = async (client, message, args) => {
     
 
 const Warn = require('../models/warn.js');
-    Warn.findOne({
+    Warn.getOne({
       userID: message.author.id,
       serverID: message.guild.id,
     }, (err, warn) => {
@@ -45,7 +45,7 @@ const Warn = require('../models/warn.js');
     .addField('Reason', reason)
     .addField('Time', message.createdAt)
     .setFooter(`© Cryptonix X Mod Bot by ${customisation.ownername}`);
-    let logchannel = message.guild.channels.find('name', 'logs');
+    let logchannel = message.guild.channels.get('name', 'logs');
     if  (!logchannel){
       message.channel.send({embed})
     }else{
@@ -79,7 +79,7 @@ const Warn = require('../models/warn.js');
     .addField('Reason', reason)
     .addField('Time', message.createdAt)
     .setFooter(`© Cryptonix X Mod Bot by ${customisation.ownername}`);
-    let logchannel = message.guild.channels.find('name', 'logs');
+    let logchannel = message.guild.channels.get('name', 'logs');
     if  (!logchannel){
       message.channel.send({embed})
     }else{

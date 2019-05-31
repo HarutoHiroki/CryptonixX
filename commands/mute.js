@@ -3,7 +3,7 @@ const customisation = require('../customisation.json');
 exports.run = async (client, message, args) => {
   let reason = args.slice(1).join(' ');
   let user = message.mentions.users.first();
-  let muteRole = client.guilds.get(message.guild.id).roles.find('name', 'Muted');
+  let muteRole = client.guilds.get(message.guild.id).roles.get('name', 'Muted');
   if(message.mentions.users.first().id === "242263403001937920") return message.reply('You can\'t mute him you pleblord.:facepalm:')
   if(message.author.id === message.mentions.users.first()) return message.reply("You can't mute yourself:facepalm:");
   if (!message.member.hasPermission("MANAGE_ROLES_OR_PERMISSIONS")) return message.reply("❌**Error:** You don't have the **Manage Roles** permission!");
@@ -40,7 +40,7 @@ exports.run = async (client, message, args) => {
   message.channel.send({embed})
 
   if (!message.guild.member(client.user).hasPermission('MANAGE_ROLES_OR_PERMISSIONS')) return message.reply(':x: I do not have the correct permissions.').catch(console.error);
-  let logchannel = message.guild.channels.find('name', 'logs');
+  let logchannel = message.guild.channels.get('name', 'logs');
   if (message.guild.member(user).roles.has(muteRole.id)) {
     message.guild.member(user).removeRole(muteRole).then(() => {
       if(!logchannel){
