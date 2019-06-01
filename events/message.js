@@ -75,12 +75,10 @@ if (!message.content.startsWith(prefix)){
         });
       
         newCoins.save()
-            .then(result => console.log(result))
             .catch(err => console.error(err));
     }else{
         coins.coins = parseInt(coins.coins) + parseInt(generatecoins());
         coins.save()
-            .then(result => console.log(result))
             .catch(err => console.error(err));
     }
     })
@@ -103,18 +101,15 @@ if (!message.content.startsWith(prefix)){
                 });
               
                 newXp.save()
-                    .then(result => console.log(result))
                     .catch(err => console.error(err));
             }else{
                 xp.xp = parseInt(xp.xp) + parseInt(generatexp());
                 xp.save()
-                    .then(result => console.log(result))
                     .catch(err => console.error(err));
                 let nxtLvl = xp.level * 1000 + 1000;
                 if(nxtLvl <= xp.xp) {
                   xp.level = parseInt(xp.level) + 1;
                   xp.save()
-                  .then(result => console.log(result))
                   .catch(err => console.error(err));
           let embed =  new Discord.RichEmbed()
           .setTitle(`${message.author.username} HAS LEVELED UP!`, ``)

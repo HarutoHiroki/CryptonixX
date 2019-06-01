@@ -1,83 +1,115 @@
 const Discord = require('discord.js');
 const fs = require("fs");
 const ms = require("ms");
-//const mysql = require('mysql');
-//const file = require('../mysql.json');
 const customisation = require('../customisation.json');
 
+const mongoose = require('mongoose');
+
 exports.run = async (client, message, args) => {
-  let reason = args.slice(1).join(' ');
-  let user = message.mentions.users.first();
-  let warns = JSON.parse(fs.readFileSync("./warnings.json", "utf8"));
-  //let logchannel = message.guild.channels.get('name', 'logs');
-  if (!message.member.hasPermission("KICK_MEMBERS")) return message.reply("❌**Error:** You don't have the **Kick Members** permission!");
-  if (message.mentions.users.size < 1) return message.reply('You must mention someone to warn them.').catch(console.error);
-  if (message.mentions.users.first().id === message.author.id) return message.reply('I can\' let you do that, self-harm is bad:facepalm:');
-  if (message.mentions.users.first().id === "242263403001937920") return message.reply("You can't warn my Developer:wink:");
-  //if (!logchannel) return message.channel.send('I cannot find a logs channel');
-  if (reason.length < 1) reason = 'No reason supplied.';
+    mongoose.connect('mongodb://localhost/DiscordDB', { useNewUrlParser: true });
+    let reason = args.slice(1).join(' ');
+    let user = message.mentions.users.first();
+    if (!message.member.hasPermission("KICK_MEMBERS")) return message.reply("❌**Error:** You don't have the **Kick Members** permission!");
+    if (message.mentions.users.size < 1) return message.reply('You must mention someone to warn them.').catch(console.error);
+    if (message.mentions.users.first().id === message.author.id) return message.reply('I can\' let you do that, self-harm is bad:facepalm:');
+    if (message.mentions.users.first().id === "242263403001937920") return message.reply("You can't warn my Developer:wink:");
+    if (reason.length < 1) reason = 'No reason supplied.';
+    
+    function makeid(length) {
+      var result           = '';
+      var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+      var charactersLength = characters.length;
+      for ( var i = 0; i < length; i++ ) {
+         result += characters.charAt(Math.floor(Math.random() * charactersLength));
+      }
+      return result;
+    }
   
-  if(!warns[`${user.id}, ${message.guild.id}`]) warns[`${user.id}, ${message.guild.id}`] = {
-    warns: 0
-  };
-
-  warns[`${user.id}, ${message.guild.id}`].warns++;
-
-  fs.writeFile("./warnings.json", JSON.stringify(warns), err => {
-    if(err) throw err;
-  });
-
-  const embed = new Discord.RichEmbed()
-  .setColor(0xFFFF00)
-  .setTimestamp()
-  .addField('Action:', 'Warning')
-  .addField('User:', `${user.username}#${user.discriminator}`)
-  .addField('Warned by:', `${message.author.username}#${message.author.discriminator}`)
-  .addField('Number of warnings:', warns[`${user.id}, ${message.guild.id}`].warns)
-  .addField('Reason', reason)
-  .setFooter(`© Cryptonix X Mod Bot by ${customisation.ownername}`);
-  let logchannel = message.guild.channels.get('name', 'logs');
-  if  (!logchannel){
-    message.channel.send({embed})
+const Warn = require('../models/warn.js');
+    Warn.findOne({
+      userID: message.author.id,
+      serverID: message.guild.id,
+    }, (err, warn) => {
+      if (err) console.error(err);
+      if (!warn) {
+    const newWarn = new Warn({
+        _id: mongoose.Types.ObjectId(),
+        serverID: message.guild.id,
+        username: user.username,
+        userID: user.id,
+        reason: reason,
+        wUsername: message.author.username,
+        wID: message.author.id,
+        warnid: makeid(7),
+        time: message.createdAt
+    });
+    newWarn.save()
+    .catch(e => console.log(e))
+    const embed = new Discord.RichEmbed()
+    .setColor(0xFFFF00)
+    .setTimestamp()
+    .addField('Action:', 'Warning')
+    .addField('User:', `${user.username}#${user.discriminator} (${user.id})`)
+    .addField('Warned by:', `${message.author.username}#${message.author.discriminator}`)
+    .addField('Reason', reason)
+    .addField('Warn ID:', newWarn.warnid)
+    .addField('Time', message.createdAt)
+    .setFooter(`© Cryptonix X Mod Bot by ${customisation.ownername}`);
+    let logchannel = message.guild.channels.get('name', 'logs');
+    if  (!logchannel){
+      message.channel.send({embed})
+    }else{
+      message.channel.send({embed})
+      client.channels.find(logchannel.id).send({embed});
+    }
+    if(user.bot) return;
+    message.mentions.users.first().send({embed}).catch(e =>{
+      if(e) return 
+    });
   }else{
-    client.channels.get(logchannel.id).send({embed});
-    message.channel.send({embed})
-  }
-  if(user.bot) return;
-  message.mentions.users.first().send({embed}).catch(e =>{
-    if(e) return 
+    const newWarn = new Warn({
+      _id: mongoose.Types.ObjectId(),
+      serverID: message.guild.id,
+      username: user.username,
+      userID: user.id,
+      reason: reason,
+      wUsername: message.author.username,
+      wID: message.author.id,
+      warnid: makeid(7),
+      time: message.createdAt
   });
-
-
-  if(warns[`${user.id}, ${message.guild.id}`].warns == 2){
-    let muteRole = message.guild.roles.get('name', 'Muted')
-
-    let mutetime = "60s";
-    message.guild.members.get(user.id).addRole(muteRole.id);
-    message.reply(`${user.tag} has been temporarily muted`);
-
-    setTimeout(function(){
-      message.guild.members.get(user.id).removeRole(muteRole.id)
-    }, ms(mutetime))
+    newWarn.save()
+    .catch(e => console.log(e))
+    const embed = new Discord.RichEmbed()
+    .setColor(0xFFFF00)
+    .setTimestamp()
+    .addField('Action:', 'Warning')
+    .addField('User:', `${user.username}#${user.discriminator} (${user.id})`)
+    .addField('Warned by:', `${message.author.username}#${message.author.discriminator}`)
+    .addField('Reason', reason)
+    .addField('Warn ID:', newWarn.warnid)
+    .addField('Time', message.createdAt)
+    .setFooter(`© Cryptonix X Mod Bot by ${customisation.ownername}`);
+    let logchannel = message.guild.channels.get('name', 'logs');
+    if  (!logchannel){
+      message.channel.send({embed})
+    }else{
+      message.channel.send({embed})
+      client.channels.find(logchannel.id).send({embed});
+    }
+    if(user.bot) return;
+    message.mentions.users.first().send({embed}).catch(e =>{
+      if(e) return 
+    });
   }
-
-  if(warns[`${user.id}, ${message.guild.id}`].warns == 3){
-    message.guild.member(user).kick(reason);
-    message.reply('That Dumb Boi have been kicked :facepalm:')
-  }
-
-  if(warns[`${user.id}, ${message.guild.id}`].warns == 5){
-    message.guild.member(user).ban(reason);
-    message.reply('You won\' have to worry about that shit-head any longer, I have Banned them!');
-  }
-
+});
 };
 
 exports.conf = {
   enabled: true,
   guildOnly: false,
-  aliases: ["smolyeet"],
-  permLevel: 0
+  aliases: ["tw"],
+  permLevel: 5
 };
 
 exports.help = {

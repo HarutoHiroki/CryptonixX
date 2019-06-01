@@ -8,6 +8,7 @@ const warnSchema = mongoose.Schema({
     reason: String,
     wUsername: String,
     wID: String,
+    warnid: String,
     time: String
 });
 
