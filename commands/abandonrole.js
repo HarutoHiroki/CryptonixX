@@ -5,12 +5,14 @@ const customisation = require('../customisation.json');
 exports.run = async (client, message, args, prefix) => {
     let member = message.guild.member(message.author);
     if(!args[0] || args[0] == "help") return message.reply(`Usage: [p]abandonrole rolename ([p] is the bot's prefix)`);
-    let selfrole = JSON.parse(fs.readFileSync("./selfrole.json", "utf8"));
-    if(!selfrole[message.guild.id]){
-        return message.reply("This server don't have any self-assignable roles!")
-    }else{
-        role = selfrole[message.guild.id].selfrole.split(',')
-        
+    selfrole.findOne({
+        serverID: message.guild.id
+    }, (err, srid) => {
+        if (err) console.error(err);
+        if (!srid) {
+            return message.channel.send(`This server doesn\'t have any selfroles!`)
+        }else{
+            role = srid.selfroleID.split(',')
             if (role.indexOf(args[0]) === -1){
                 message.reply("That is not a self-assigned role")
                 return
@@ -27,9 +29,9 @@ exports.run = async (client, message, args, prefix) => {
                   .setFooter(`© Cryptonix X Mod Bot by ${customisation.ownername}`);
 
                   message.channel.send({embed});
-                  return;
             }
-    }
+        }
+    })
 }
 
 exports.conf = {

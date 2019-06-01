@@ -108,8 +108,8 @@ const Warn = require('../models/warn.js');
 exports.conf = {
   enabled: true,
   guildOnly: false,
-  aliases: ["tw"],
-  permLevel: 5
+  aliases: [],
+  permLevel: 0
 };
 
 exports.help = {

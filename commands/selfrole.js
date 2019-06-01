@@ -1,84 +1,114 @@
 const Discord = require("discord.js");
 const fs = require("fs");
 const customisation = require('../customisation.json');
-
+const mongoose = require('mongoose');
 exports.run = async (client, message, args, prefix) => {
-  let selfrole = JSON.parse(fs.readFileSync("./selfrole.json", "utf8"));
-  if(!message.member.hasPermission("ADMINISTRATOR")) return message.reply(`:facepalm: You can't do that BOIII! :facepalm:`);
-  if(!args.join(" ") || args[0 == "help"]) return message.reply(`Usage: [p]selfrole role1,role2,... ([p] is the bot's prefix); [p]selfrole clear (to clear the selfrole list)`);
-  if(args[0] === "clear") {
-    
+    const selfrole = require("../models/selfrole.js")
+    if(!message.member.hasPermission("ADMINISTRATOR")) return message.reply(`:facepalm: You can't do that BOIII! :facepalm:`);
+    if(!args.join(" ") || args[0] == "help") return message.reply(`Usage: [p]selfrole role1,role2,... ([p] is the bot's prefix); [p]selfrole clear (to clear the selfrole list)`);
+    if(args[0] !== "add" && args[0] !== "clear" && args[0] !== "list") return message.reply(`Usage: [p]selfrole role1,role2,... ([p] is the bot's prefix); [p]selfrole clear (to clear the selfrole list)`);
+    if(args[0] === "clear") {
+        var MongoClient = require('mongodb').MongoClient;
+          var url = "mongodb://localhost:27017/";
+          MongoClient.connect(url, { useNewUrlParser: true }, function(err, db) {
+            if (err) throw err;
+            var dbo = db.db("DiscordDB");
+            var myquery = {
+              serverID: message.guild.id 
+            };
+            dbo.collection("selfroles").deleteMany(myquery, function(err, obj) {
+              if (err){ 
+                message.channel.send("Error: ",err)
+                throw err
+              };
+              message.channel.send("All selfrole(s) have been cleared!");
+              db.close();
+            });
+          });
+    }
+    if(args[0] === "add"){
+        srole = args[1].split(',')
+        let allowedString = ''
+        fsrole = ''
+        srole.forEach((role) => {
+            let rsrole = message.guild.roles.get(role);
+            if (!rsrole){
+              return message.reply(`${role} isn't a role on this Server!`)
+            }else{
+                let botRolePosition = message.guild.member(client.user).highestRole.position;
+                let rolePosition = role.position;
+                if (botRolePosition <= rolePosition) return message.channel.send(`❌**Error:** Failed to add ${message.guild.roles.get(role).name} to the selfrole list because my highest role is lower than the specified role.`);
+                allowedString = allowedString.concat('- ' + message.guild.roles.get(role).name + '\n')
+                fsrole = fsrole.concat(role + ',')
+            }
+        })
+            selfrole.findOne({
+                serverID: message.guild.id 
+            }, (err, srid) => {
+                if (err) console.error(err);
+                if (!srid) {
+                    const newSelfrole = new selfrole({
+                        _id: mongoose.Types.ObjectId(),
+                        serverID: message.guild.id,
+                        selfroleID: fsrole,
+                    });
+                
+                    newSelfrole.save()
+                        .then(result => console.log(result))
+                        .catch(err => console.error(err));
+                }else{
+                    srid.selfroleID = fsrole;
+                    srid.save()
+                        .then(result => console.log(result))
+                        .catch(err => console.error(err));
+                }
+            });
+            let embed = new Discord.RichEmbed()
+            .setColor("#ff8200")
+            .setTitle("Self-Role Added")
+            .setDescription(`Self Assignable Roles: \n${allowedString}`)
+            .setFooter(`© Cryptonix X Mod Bot by ${customisation.ownername}`);
+          
+            message.channel.send({embed});
+    }
+    if(args[0] === 'list'){
+        selfrole.findOne({
+            serverID: message.guild.id
+        }, (err, srid) => {
+            if (err) console.error(err);
+            if (!srid) {
+                return message.channel.send(`This server doesn\'t have any selfroles!`)
+            }else{
+                srname = srid.selfroleID.split(',')
+                let allowedString = ''
+                srname.forEach((roleid) => {
+                    if(roleid.length > 5){
+                        //console.log(roleid)
+                        rolename = message.guild.roles.get(roleid).name
+                        allowedString = allowedString.concat('- ' + rolename + '\n')
+                    }
+                })
+                let embed = new Discord.RichEmbed()
+                .setColor("#ff8200")
+                .setTitle("Self-Role List")
+                .setDescription(`Self Assignable Roles: \n${allowedString}`)
+                .setFooter(`© Cryptonix X Mod Bot by ${customisation.ownername}`);
 
-    selfrole[message.guild.id] = {
-      selfrole: null
-  };
-  await fs.writeFile("./selfrole.json", JSON.stringify(selfrole), (err) =>{
-    if (err) console.log(err)
-  });
-  message.reply("Self-assignable roles list has now been cleared!")
-  return;
-  }
-
-  
-  if(args[0] != "list"){
-  srole = args[0].split(',')
-  let allowedString = ''
-  fsrole = ''
-  srole.forEach((role) => {
-  let rsrole = message.guild.roles.find('name', role);
-  if (!rsrole){
-    return message.reply(`${role} isn't a role on this Server!`)
-  }else{
-    let botRolePosition = message.guild.member(client.user).highestRole.position;
-  let rolePosition = role.position;
-  if (botRolePosition <= rolePosition) return message.channel.send(`❌**Error:** Failed to add ${role} to the selfrole list because my highest role is lower than the specified role.`);
-    allowedString = allowedString.concat('- ' + role + '\n')
-   
-    
-    fsrole = fsrole.concat(role + ',')
-    
-
-    selfrole[message.guild.id] = {
-      selfrole: fsrole
-  };
-  fs.writeFile("./selfrole.json", JSON.stringify(selfrole), (err) =>{
-    if (err) console.log(err)
-  });
-}
-  })
-
-  let embed = new Discord.RichEmbed()
-  .setColor("#ff8200")
-  .setTitle("Self-Role Added")
-  .setDescription(`Self Assignable Roles: \n${allowedString}`)
-  .setFooter(`© Cryptonix X Mod Bot by ${customisation.ownername}`);
-
-  message.channel.send({embed});
-}else{
-  
-  if (!selfrole[message.guild.id] || selfrole[message.guild.id].selfrole === null){
-    return message.reply("This server don't have any self-assignable roles!")
-  }else{
-  let embed = new Discord.RichEmbed()
-  .setColor("#ff8200")
-  .setTitle("Self-Role List")
-  .setDescription(`Self Assignable Roles: \n${selfrole[message.guild.id].selfrole.split(',')}`)
-  .setFooter(`© Cryptonix X Mod Bot by ${customisation.ownername}`);
-
-  message.channel.send({embed});
-  }
-}
+                message.channel.send({embed});
+            }
+        })
+    }
 }
 
 exports.conf = {
-  enabled: true,
-  guildOnly: false,
-  aliases: [],
-  permLevel: 0
+    enabled: true,
+    guildOnly: false,
+    aliases: [],
+    permLevel: 0
 };
 
 exports.help = {
-  name: "selfrole",
-  description: "Create Self-assignable Roles",
-  usage: "selfrole"
+    name: "selfrole",
+    description: "Create Self-assignable Roles",
+    usage: "selfrole"
 };
