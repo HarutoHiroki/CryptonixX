@@ -38,7 +38,7 @@ exports.run = async (client, message, args, prefix) => {
                 let botRolePosition = message.guild.member(client.user).highestRole.position;
                 let rolePosition = role.position;
                 if (botRolePosition <= rolePosition) return message.channel.send(`❌**Error:** Failed to add ${message.guild.roles.get(role).name} to the selfrole list because my highest role is lower than the specified role.`);
-                allowedString = allowedString.concat('- ' + message.guild.roles.get(role).name + '\n')
+                allowedString = allowedString.concat('- ' + message.guild.roles.get(role).name + " ID: " + message.guild.roles.get(role).id + '\n')
                 fsrole = fsrole.concat(role + ',')
             }
         })
@@ -47,29 +47,46 @@ exports.run = async (client, message, args, prefix) => {
             }, (err, srid) => {
                 if (err) console.error(err);
                 if (!srid) {
+                
                     const newSelfrole = new selfrole({
                         _id: mongoose.Types.ObjectId(),
                         serverID: message.guild.id,
                         selfroleID: fsrole,
                     });
-                
+
                     newSelfrole.save()
-                        .then(result => console.log(result))
-                        .catch(err => console.error(err));
+                    .then(result => console.log(result))
+                    .catch(err => console.error(err));
+                    let embed = new Discord.RichEmbed()
+                    .setColor("#ff8200")
+                    .setTitle("Self-Role Added")
+                    .setDescription(`Self Assignable Roles: \n${allowedString}`)
+                    .setFooter(`© Cryptonix X Mod Bot by ${customisation.ownername}`);
+
+                    message.channel.send({embed});
                 }else{
-                    srid.selfroleID = fsrole;
+                    srid.selfroleID = srid.selfroleID.concat(fsrole);
                     srid.save()
-                        .then(result => console.log(result))
-                        .catch(err => console.error(err));
+                    .then(result => console.log(result))
+                    .catch(err => console.error(err));
+                    eh = srid.selfroleID.split(',')
+                    newselfrole = ''
+                    eh.forEach((rolee) => {
+                        //console.log(rolee)
+                        if(rolee.length > 5){
+                            newselfrole = newselfrole.concat('- ' + message.guild.roles.get(rolee).name + " ID: " + message.guild.roles.get(rolee).id + '\n')
+                        }
+                    })
+                    let embed = new Discord.RichEmbed()
+                    .setColor("#ff8200")
+                    .setTitle("Self-Role Added")
+                    .setDescription(`Self Assignable Roles: \n${newselfrole}`)
+                    .setFooter(`© Cryptonix X Mod Bot by ${customisation.ownername}`);
+
+                    message.channel.send({embed});
                 }
             });
-            let embed = new Discord.RichEmbed()
-            .setColor("#ff8200")
-            .setTitle("Self-Role Added")
-            .setDescription(`Self Assignable Roles: \n${allowedString}`)
-            .setFooter(`© Cryptonix X Mod Bot by ${customisation.ownername}`);
-          
-            message.channel.send({embed});
+            
     }
     if(args[0] === 'list'){
         selfrole.findOne({
@@ -85,7 +102,7 @@ exports.run = async (client, message, args, prefix) => {
                     if(roleid.length > 5){
                         //console.log(roleid)
                         rolename = message.guild.roles.get(roleid).name
-                        allowedString = allowedString.concat('- ' + rolename + '\n')
+                        allowedString = allowedString.concat('- ' + rolename + " - ID: " + roleid + '\n')
                     }
                 })
                 let embed = new Discord.RichEmbed()
