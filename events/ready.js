@@ -13,8 +13,8 @@ module.exports = client => {
     client.user.setPresence({ game: { name: `${activities[Math.floor(Math.random() * activities.length) + 1]}`, type: 1, url: "https://www.twitch.tv/hiroaki_haruto" }})
   },60000);
   setInterval(() => {
-    const guildid = require('../models/guild.js');
-    guildid.findOne({
+    const guildsid = require('../models/guild.js');
+    guildsid.findOne({
       dbID: 333
     }, (err, guildsid) => {
       if (err) console.error(err);
@@ -23,40 +23,41 @@ module.exports = client => {
       }else{
         let guild = client.guilds.get(guildsid.guildID)
         if(!guild){
-          var MongoClient = require('mongodb').MongoClient;
-            var url = "mongodb://localhost:27017/";
+          const MongoClient = require('mongodb').MongoClient;
+            const url = "mongodb://localhost:27017/";
             MongoClient.connect(url, { useNewUrlParser: true }, function(err, db) {
               if (err) throw err;
-              var dbo = db.db("DiscordDB");
-              var myquery = {
-                serverID: message.guild.id 
+              const dbo = db.db("DiscordDB");
+              const myquery = {
+                dbID: 333,
+                guildID: guildsid.guildID
               };
-              dbo.collection("warns").deleteMany(myquery, function(err, obj) {
+              dbo.collection("guilds").deleteOne(myquery, function(err, obj) {
                 if (err){ 
-                  message.channel.send("Error: ",err)
                   throw err
                 };
+                //console.log("Done 1")
                 db.close();
               });
-              dbo.collection("guild").deleteMany(myquery, function(err, obj) {
+              dbo.collection("warns").deleteMany(myquery, function(err, obj) {
                 if (err){ 
-                  message.channel.send("Error: ",err)
                   throw err
                 };
+                //console.log("Done 2")
                 db.close();
               });
               dbo.collection("xps").deleteMany(myquery, function(err, obj) {
                 if (err){ 
-                  message.channel.send("Error: ",err)
                   throw err
                 };
+                //console.log("Done 3")
                 db.close();
               });
               dbo.collection("selfroles").deleteMany(myquery, function(err, obj) {
                 if (err){ 
-                  message.channel.send("Error: ",err)
                   throw err
                 };
+                //console.log("Done 4")
                 db.close();
               });
             });
