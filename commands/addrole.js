@@ -1,5 +1,4 @@
 const settings = require('../settings.json');
-const customisation = require('../customisation.json');
 exports.run = (client, message, args) => {
     if (!message.guild.member(client.user).hasPermission("MANAGE_ROLES_OR_PERMISSIONS")) return message.reply("❌**Error:** I don't have the **Manage Roles** permission!");
     if (!message.member.hasPermission("MANAGE_ROLES_OR_PERMISSIONS")) return message.reply("❌**Error:** You don't have the **Manage Roles** permission!");
@@ -7,7 +6,7 @@ exports.run = (client, message, args) => {
     let member = message.guild.member(message.mentions.users.first());
     if (!member) return message.reply("❌**Error:** That user does not seem valid.");
     let name = message.content.split(" ").splice(2).join(" ");
-    let role = message.guild.roles.get('name', name);
+    let role = message.guild.roles.find('name', name);
     if (!role) return message.reply(`❌**Error:** ${name} isn't a role on this server!`);
     let botRolePosition = message.guild.member(client.user).highestRole.position;
     let rolePosition = role.position;
