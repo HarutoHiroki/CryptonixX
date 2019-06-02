@@ -5,8 +5,8 @@ exports.run = (client, message, args) => {
     if (message.mentions.users.size === 0) return message.reply("❌Please mention a user to give the role to.\nExample: `addrole @user Members`");
     let member = message.guild.member(message.mentions.users.first());
     if (!member) return message.reply("❌**Error:** That user does not seem valid.");
-    let name = message.content.split(" ").splice(2).join(" ");
-    let role = message.guild.roles.find('name', name);
+    let rname = message.content.split(" ").splice(2).join(" ");
+    let role = message.guild.roles.find(val => val.name === rname);
     if (!role) return message.reply(`❌**Error:** ${name} isn't a role on this server!`);
     let botRolePosition = message.guild.member(client.user).highestRole.position;
     let rolePosition = role.position;

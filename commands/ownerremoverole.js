@@ -7,12 +7,12 @@ exports.run = (client, message, args) => {
     if (message.mentions.users.size === 0) return message.reply(":no_entry_sign: Please mention a user to remove the role from.");
     let member = message.guild.member(message.mentions.users.first());
     if (!member) return message.reply(":no_entry_sign: **Error:** That user does not seem valid.");
-    let name = message.content.split(" ").splice(2).join(" ");
-    let role = message.guild.roles.find("name", name);
+    let rname = message.content.split(" ").splice(2).join(" ");
+    let role = message.guild.roles.find(val => val.name === rname);
     member.removeRole(role).catch(e => {
         return message.channel.send(":no_entry_sign: There was an error! It most likely is that the role you are trying to remove is higher than the the role I have!");
     });
-    message.channel.send(`<a:balancecheck:556017659419033653> **${message.author.username}**, I've removed the **${name}** role from **${message.mentions.users.first().username}**.`);
+    message.channel.send(`<a:balancecheck:556017659419033653> **${message.author.username}**, I've removed the **${rname}** role from **${message.mentions.users.first().username}**.`);
 }
 
 exports.conf = {

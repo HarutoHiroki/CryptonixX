@@ -4,7 +4,7 @@ const customisation = require('../customisation.json');
 exports.run = (client, message, args) => {
   let reason = args.slice(1).join(' ');
   let user = args[0];
-  //let logchannel = message.guild.channels.find('name', 'logs');
+  //let logchannel = message.guild.channels.find(val => val.name === 'logs');
   //if (!logchannel) return message.channel.send('I cannot find a logs channel');
   if (args[0] === message.author.id) return message.reply('I can\' let you do that, self-harm is bad:facepalm:');
   if (user === client.user.id) return message.reply("You pleblord, how can you use a bot to ban itself?:joy:");
@@ -26,7 +26,7 @@ exports.run = (client, message, args) => {
     .addField('Reason', reason)
     .setFooter(`© Cryptonix X Mod Bot by ${customisation.ownername}`);
     
-    let logchannel = message.guild.channels.find('name', 'logs');
+    let logchannel = message.guild.channels.find(val => val.name === 'logs');
     if  (!logchannel){
       message.channel.send(`:hammer: Done. You don't have to worry about that shit head anymore, I have banned them!`)
       message.channel.send({embed})

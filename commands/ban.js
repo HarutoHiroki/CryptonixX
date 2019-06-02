@@ -4,7 +4,7 @@ const customisation = require('../customisation.json');
 exports.run = (client, message, args) => {
   let reason = args.slice(1).join(' ');
   let user = message.mentions.users.first();
-  //let logchannel = message.guild.channels.find('name', 'logs');
+  //let logchannel = message.guild.channels.find(val => val.name === rname);
   //if (!logchannel) return message.channel.send('I cannot find a logs channel');
   if (!message.member.hasPermission("BAN_MEMBERS")) return message.channel.send(":no_entry_sign: **Error:** You don't have the **Ban Members** permission!");
   if (message.mentions.users.size < 1) return message.channel.send('You must mention someone to ban them.').catch(console.error);
@@ -29,7 +29,7 @@ exports.run = (client, message, args) => {
     .addField('Moderator:', `${message.author.username}#${message.author.discriminator}`)
     .addField('Reason', reason)
     .setFooter(`© Cryptonix X Mod Bot by ${customisation.ownername}`);
-    let logchannel = message.guild.channels.find('name', 'logs');
+    let logchannel = message.guild.channels.find(val => val.name === 'logs');
   if  (!logchannel){
     message.channel.send({embed})
     message.channel.send(`:hammer: Done. You don't have to worry about that shit head anymore, I have banned them!`)

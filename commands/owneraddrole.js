@@ -6,16 +6,16 @@ exports.run = (client, message, args) => {
     if (message.mentions.users.size === 0) return message.reply("❌Please mention a user to give the role to.\nExample: `owneraddrole @user Members`");
     let member = message.guild.member(message.mentions.users.first());
     if (!member) return message.reply("❌**Error:** That user does not seem valid.");
-    let name = message.content.split(" ").splice(2).join(" ");
-    let role = message.guild.roles.find('name', name);
-    if (!role) return message.reply(`❌**Error:** ${name} isn't a role on this server!`);
+    let rname = message.content.split(" ").splice(2).join(" ");
+    let role = message.guild.roles.find(val => val.name === rname);
+    if (!role) return message.reply(`❌**Error:** ${rname} isn't a role on this server!`);
     let botRolePosition = message.guild.member(client.user).highestRole.position;
     let rolePosition = role.position;
     if (botRolePosition <= rolePosition) return message.channel.send("❌**Error:** Failed to add the role to the user because my highest role is lower than the specified role.");
     member.addRole(role).catch(e => {
         return message.channel.send(`❌**Error:**\n${e}`);
     });
-    message.channel.send(`<a:balancecheck:556017659419033653> **${message.author.username}**, I've added the **${name}** role from **${message.mentions.users.first().username}**.`);
+    message.channel.send(`<a:balancecheck:556017659419033653> **${message.author.username}**, I've added the **${rname}** role from **${message.mentions.users.first().username}**.`);
 }
 
 exports.conf = {

@@ -55,7 +55,7 @@ const Warn = require('../models/warn.js');
     .addField('Warn ID:', newWarn.warnid)
     .addField('Time', message.createdAt)
     .setFooter(`© Cryptonix X Mod Bot by ${customisation.ownername}`);
-    let logchannel = message.guild.channels.find('name', 'logs');
+    let logchannel = message.guild.channels.find(val => val.name === 'logs');
     if  (!logchannel){
       message.channel.send({embed})
     }else{
@@ -90,7 +90,7 @@ const Warn = require('../models/warn.js');
     .addField('Warn ID:', newWarn.warnid)
     .addField('Time', message.createdAt)
     .setFooter(`© Cryptonix X Mod Bot by ${customisation.ownername}`);
-    let logchannel = message.guild.channels.find('name', 'logs');
+    let logchannel = message.guild.channels.find(val => val.name === 'logs');
     if  (!logchannel){
       message.channel.send({embed})
     }else{

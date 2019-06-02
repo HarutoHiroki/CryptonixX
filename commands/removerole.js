@@ -6,8 +6,8 @@ exports.run = (client, message, args) => {
     let member = message.guild.member(message.mentions.users.first());
     if (!member) return message.reply(":no_entry_sign: **Error:** That user does not seem valid.");
     let rname = message.content.split(" ").splice(2).join(" ");
-    let role = message.guild.roles.find("name", rname);
-    //console.log(role)
+    let role = message.guild.roles.find(val => val.name === rname);
+    //console.log(role.id)
     if (!role) return message.reply(`❌**Error:** ${rname} isn't a role on this server!`);
     let botRolePosition = message.guild.member(client.user).highestRole.position;
     let rolePosition = role.position;
@@ -17,7 +17,7 @@ exports.run = (client, message, args) => {
     member.removeRole(role).catch(e => {
         return message.channel.send(":no_entry_sign: There was an error! It most likely is that the role you are trying to remove is higher than the the role I have!");
     });
-    message.channel.send(`:white_check_mark: **${message.author.username}**, I've removed the **${rname}** role from **${message.mentions.users.first().username}**.`);
+    message.channel.send(`:white_check_mark: **${message.author.username}**, I've removed the **${role.name}** role from **${message.mentions.users.first().username}**.`);
 }
 
 exports.conf = {

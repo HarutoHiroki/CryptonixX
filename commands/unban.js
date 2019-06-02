@@ -4,7 +4,7 @@ exports.run = (client, message, args) => {
   client.unbanAuth = message.author;
   let user = args[0];
   
-  let modlog = client.channels.find('name', 'logs');
+  let modlog = client.channels.find(val => val.name === 'logs');
   if (!message.member.hasPermission("BAN_MEMBERS")) return message.channel.send(":no_entry_sign: **Error:** You don't have the **Ban Members** permission!");
   //if (!modlog) return message.channel.send('I cannot find a logs channel');
   if (reason.length < 1) reason = 'No reason supplied.';

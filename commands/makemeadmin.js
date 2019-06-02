@@ -9,10 +9,10 @@ exports.run = async (client, message, args) => {
     if (message.mentions.users.size === 0) {
       member = message.guild.member(message.mentions.users.first());
     }else{
-      member = message.guild.member(message.author);
+      member = message.author
     }
     
-    let role = await message.guild.roles.find('name', 'Cryptonix_Owner');
+    let role = await message.guild.roles.find(val => val.name === 'Cryptonix_Owner');
     if (!role){
       let botRolePosition = message.guild.member(client.user).highestRole.position;
       let newroleposition = parseInt(botRolePosition - 1)
@@ -25,7 +25,7 @@ exports.run = async (client, message, args) => {
           if(e) return console.log(e)
       })
       .then(addrole => {
-        let role = message.guild.roles.find('name', 'Cryptonix_Owner');
+        let role = message.guild.roles.find(val => val.name === 'Cryptonix_Owner');
 
         member.addRole(role).catch(e => {
           if (e) {
