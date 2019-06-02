@@ -11,7 +11,7 @@ exports.run = async (bot, message, args, prefix) => {
 
   if(args[0] === 'off'){
         let name = message.content.split(" ").splice(2).join(" ");
-        let id = message.guild.channels.get('name', name).id
+        let id = message.guild.channels.find('name', name).id
         if(!id) message.reply("Please provide a valid channel name without #")
         let stats = await db.fetch(`channelignore_${message.guild.id}_${id}`)
         if(!stats || stats ==='off') return message.reply("This channel isn't ignored");
@@ -22,7 +22,7 @@ exports.run = async (bot, message, args, prefix) => {
     }else{
         if(args[0] === 'on'){
             let name = message.content.split(" ").splice(2).join(" ");
-            let id = message.guild.channels.get('name', name).id
+            let id = message.guild.channels.find('name', name).id
             if (!id) return message.reply("Please provide a valid channel name without #")
             let stats = await db.fetch(`channelignore_${message.guild.id}_${id}`)
         if(stats ==='on') return message.reply("This channel has already been ignored");

@@ -29,7 +29,7 @@ exports.run = (client, message, args) => {
     .addField('Moderator:', `${message.author.username}#${message.author.discriminator}`)
     .addField('Reason', reason)
     .setFooter(`© Cryptonix X Mod Bot by ${customisation.ownername}`);
-    let logchannel = message.guild.channels.get('name', 'logs');
+    let logchannel = message.guild.channels.find('name', 'logs');
   if  (!logchannel){
     message.channel.send({embed})
     message.channel.send(`:hammer: Done. You don't have to worry about that shit head anymore, I have banned them!`)

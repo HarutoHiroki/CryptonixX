@@ -55,12 +55,12 @@ const Warn = require('../models/warn.js');
     .addField('Warn ID:', newWarn.warnid)
     .addField('Time', message.createdAt)
     .setFooter(`© Cryptonix X Mod Bot by ${customisation.ownername}`);
-    let logchannel = message.guild.channels.get('name', 'logs');
+    let logchannel = message.guild.channels.find('name', 'logs');
     if  (!logchannel){
       message.channel.send({embed})
     }else{
       message.channel.send({embed})
-      client.channels.find(logchannel.id).send({embed});
+      client.channels.get(logchannel.id).send({embed});
     }
     if(user.bot) return;
     message.mentions.users.first().send({embed}).catch(e =>{
@@ -90,12 +90,12 @@ const Warn = require('../models/warn.js');
     .addField('Warn ID:', newWarn.warnid)
     .addField('Time', message.createdAt)
     .setFooter(`© Cryptonix X Mod Bot by ${customisation.ownername}`);
-    let logchannel = message.guild.channels.get('name', 'logs');
+    let logchannel = message.guild.channels.find('name', 'logs');
     if  (!logchannel){
       message.channel.send({embed})
     }else{
       message.channel.send({embed})
-      client.channels.find(logchannel.id).send({embed});
+      client.channels.get(logchannel.id).send({embed});
     }
     if(user.bot) return;
     message.mentions.users.first().send({embed}).catch(e =>{
