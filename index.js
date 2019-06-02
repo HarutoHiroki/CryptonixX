@@ -51,15 +51,15 @@ client.on("guildCreate", guild => {
       }
   }
 
-  let owner = client.guilds.get(guild.ownerID)
-  console.log(owner)
+  let owner = guild.ownerID
+  //console.log(owner)
   if(owner !== settings.ownerid){
     if(guild.id === '264445053596991498') return
     let channel = client.channels.get(guild.systemChannelID || channelID);
     let botCount = client.guilds.get(guild.id).members.filter(m => m.user.bot).size
-    console.log(botCount)
+    //console.log(botCount)
     let memCount = client.guilds.get(guild.id).members.filter(m => !m.user.bot).size
-    console.log(memCount)
+    //console.log(memCount)
     if (memCount < 5 || botCount >= 9){ 
       guild.owner.send("This server have too much bots (9+) or has too few members. Try again later!")
       return guild.leave()
@@ -76,6 +76,20 @@ client.on("guildCreate", guild => {
         }
       })
   }
+  const guildid = require('./models/guild.js');
+    guildid.findOne({
+      dbID: 333
+    }, (err, guildsid) => {
+      if (err) console.error(err);
+      if (!guildsid) {
+        const newGuild = new guildid({
+          _id: mongoose.Types.ObjectId(),
+          dbID: 333,
+          guildID: guild.id,
+      });
+      newGuild.save()
+      }
+    })
 });
 
 //command reload

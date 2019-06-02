@@ -127,5 +127,5 @@ exports.conf = {
 exports.help = {
     name: "selfrole",
     description: "Create Self-assignable Roles",
-    usage: "selfrole"
+    usage: "selfrole clear|list|add roleID"
 };
