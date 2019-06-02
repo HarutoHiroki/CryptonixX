@@ -26,12 +26,12 @@ exports.run = async (client, message, args) => {
         });
   
         newXp.save()
-            .then(result => console.log(result))
+            //.then(result => console.log(result))
             .catch(err => console.error(err));
     }else{
         xp.xp = parseInt(args[1]);
         xp.save()
-            .then(result => console.log(result))
+            //.then(result => console.log(result))
             .catch(err => console.error(err));
     }
     const embed = new Discord.RichEmbed()

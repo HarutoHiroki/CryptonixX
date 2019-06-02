@@ -14,14 +14,14 @@ exports.run = async (bot, message, args, prefix) => {
         if(!stats || stats ==='off') return message.reply("XP gain for this server is already off");
         db.set(`xpstatus_${message.guild.id}`, 'off')
         message.channel.send("Success, XP gain for this server is now Off")
-        console.log(await db.fetch(`xpstatus_${message.guild.id}`))
+        //console.log(await db.fetch(`xpstatus_${message.guild.id}`))
         return
     }else{
         if(args[0] === 'on'){
             let stats = await db.fetch(`xpstatus_${message.guild.id}`)
         if(stats ==='on') return message.reply("XP gain for this server is already on");
             db.set(`xpstatus_${message.guild.id}`, 'on')
-            console.log(await db.fetch(`xpstatus_${message.guild.id}`))
+            //console.log(await db.fetch(`xpstatus_${message.guild.id}`))
 
             let embed = new Discord.RichEmbed()
             .setColor("#ff8200")

@@ -2,7 +2,7 @@ const Discord = require('discord.js');
 const mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost:27017/DiscordDB', { useNewUrlParser: true }, err => {
     if (err) console.error(err);
-    console.log(mongoose);
+    //console.log(mongoose);
 });
 const xp = require('../models/xp.js');
 const numbers = [':one:', ':two:', ':three:', ':four:', ':five:', ':six:', ':seven:', ':eight:', ':nine:', ':keycap_ten:'];

@@ -17,7 +17,7 @@ exports.run = async (bot, message, args, prefix) => {
         if(!stats || stats ==='off') return message.reply("This channel isn't ignored");
         db.set(`channelignore_${message.guild.id}_${id}`, 'off')
         message.channel.send("Success, Unignored")
-        console.log(await db.fetch(`channelignore_${message.guild.id}_${id}`))
+        //console.log(await db.fetch(`channelignore_${message.guild.id}_${id}`))
         return
     }else{
         if(args[0] === 'on'){
@@ -27,7 +27,7 @@ exports.run = async (bot, message, args, prefix) => {
             let stats = await db.fetch(`channelignore_${message.guild.id}_${id}`)
         if(stats ==='on') return message.reply("This channel has already been ignored");
             db.set(`channelignore_${message.guild.id}_${id}`, 'on')
-            console.log(await db.fetch(`channelignore_${message.guild.id}_${id}`))
+            //console.log(await db.fetch(`channelignore_${message.guild.id}_${id}`))
 
             let embed = new Discord.RichEmbed()
             .setColor("#ff8200")

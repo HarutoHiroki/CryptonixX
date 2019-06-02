@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost:27017/DiscordDB', { useNewUrlParser: true }, err => {
     if (err) console.error(err);
-    console.log(mongoose);
+    //console.log(mongoose);
 });
 const Money = require('../models/coins.js');
 

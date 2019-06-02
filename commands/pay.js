@@ -30,7 +30,7 @@ exports.run = async (client, message, args) => {
       } else{
         coins.coins = parseInt(coins.coins) - parseInt(args[1]);
         coins.save()
-            .then(result => console.log(result))
+            //.then(result => console.log(result))
             .catch(err => console.error(err));
       }
     });
@@ -49,12 +49,12 @@ exports.run = async (client, message, args) => {
         });
         
         newCoins.save()
-            .then(result => console.log(result))
+            //.then(result => console.log(result))
             .catch(err => console.error(err));
     }else{
         coins.coins = parseInt(coins.coins) + parseInt(args[1]);
         coins.save()
-            .then(result => console.log(result))
+            //.then(result => console.log(result))
             .catch(err => console.error(err));
     }
       

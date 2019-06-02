@@ -55,7 +55,7 @@ exports.run = async (client, message, args, prefix) => {
                     });
 
                     newSelfrole.save()
-                    .then(result => console.log(result))
+                    //.then(result => console.log(result))
                     .catch(err => console.error(err));
                     let embed = new Discord.RichEmbed()
                     .setColor("#ff8200")
@@ -67,7 +67,7 @@ exports.run = async (client, message, args, prefix) => {
                 }else{
                     srid.selfroleID = srid.selfroleID.concat(fsrole);
                     srid.save()
-                    .then(result => console.log(result))
+                    //.then(result => console.log(result))
                     .catch(err => console.error(err));
                     eh = srid.selfroleID.split(',')
                     newselfrole = ''
