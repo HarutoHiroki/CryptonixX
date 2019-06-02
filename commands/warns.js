@@ -12,7 +12,7 @@ exports.run = async (bot, message, args) => {
         serverID: message.guild.id
     }, (err, warn) => {
         if (err) console.error(err);
-        if (!warn || warn.lenth <= 0 || warn.length == undefined || warn == undefined) {
+        if (!warn) {
             return message.channel.send(`This user doesn\'t have any warnings:wink:`)
         }
     })

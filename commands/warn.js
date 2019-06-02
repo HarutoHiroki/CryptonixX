@@ -55,7 +55,7 @@ const Warn = require('../models/warn.js');
     .addField('Warn ID:', newWarn.warnid)
     .addField('Time', message.createdAt)
     .setFooter(`© Cryptonix X Mod Bot by ${customisation.ownername}`);
-    let logchannel = message.guild.channels.find('name', 'logs');
+    let logchannel = message.guild.channels.find(val => val.name === 'logs');
     if  (!logchannel){
       message.channel.send({embed})
     }else{
@@ -103,6 +103,93 @@ const Warn = require('../models/warn.js');
     });
   }
 });
+
+  const cursor = Warn.find({
+    userID: message.mentions.users.first().id,
+    serverID: message.guild.id,
+  })
+  cursor.exec(async (err, result) => {
+    if (err) {
+      console.error(err);
+    }
+    //console.log(result.length)
+    const punishstats = require('../models/punish.js')
+    const gpunish = punishstats.findOne({
+      guildID: message.guild.id,
+  }, async (err, punish) => {
+    if(!punish) return console.log("returned")
+    if(punish.mutestatus === 'on'){
+      if(result.length + 1 >= punish.mute){
+        //console.log("muted")
+        let user = message.mentions.users.first();
+        let muteRole = client.guilds.get(message.guild.id).roles.find(val => val.name === 'Muted');
+        if (!muteRole) {
+          try {
+              muteRole = await message.guild.createRole({
+                  name:"Muted",
+                  color: "#000000",
+                  permissions:[]
+              });
+      
+              message.guild.channels.forEach(async (channel, id) => {
+                  await channel.overwritePermissions(muteRole, {
+                      SEND_MESSAGES: false,
+                      MANAGE_MESSAGES: false,
+                      READ_MESSAGES: false,
+                      ADD_REACTIONS: false
+                  });
+              });
+          } catch(e) {
+              console.log(e.stack);
+          }
+        }
+        if (message.guild.member(user).roles.has(muteRole.id)) {
+         return
+        } else {
+          message.guild.member(user).addRole(muteRole).then(() => {
+            let logchannel = message.guild.channels.find(val => val.name === 'logs');
+            if(!logchannel){
+              message.channel.send("***" + user.username + "***" + ` has been auto-muted for exeeding ${punish.mute} warns`)
+            return
+          }else{
+            message.channel.send("***" + user.username + "***" + ` has been auto-muted for exeeding ${punish.mute} warns`)
+            client.channels.get(logchannel.id).send("***" + user.username + "***" + ` has been auto-muted for exeeding ${punish.mute} warns`).catch(console.error);
+          }
+        })
+        }
+      }
+    }
+  })
+
+  const ggpunish = punishstats.findOne({
+    guildID: message.guild.id
+  }, (err, punish) => {
+    if(!punish) return
+    if(punish.mutestatus === 'on'){
+      if(result.length >= punish.ban){
+        let user = message.mentions.users.first()
+        if (!message.guild.member(user).bannable) {
+          message.channel.send(`:redTick: I cannot ban that member. My role might not be high enough or it's an internal error.`);
+          return
+        }
+        message.guild.ban(user).then(() => {
+        let logchannel = message.guild.channels.find(val => val.name === 'logs');
+        if(!logchannel){
+          message.channel.send("***" + user.username + "***" + ` has been auto-banned for exeeding ${punish.ban} warns`)
+          return
+        }else{
+          message.channel.send("***" + user.username + "***" + ` has been auto-banned for exeeding ${punish.ban} warns`)
+          client.channels.get(logchannel.id).send(user.username + ` has been auto-banned for exeeding ${punish.ban} warns`).catch(console.error);
+        }
+        if(user.bot) return;
+        return message.mentions.users.first().send(`You have been auto-banned for having ${punish.ban} or more warns!`).catch(e =>{
+          if(e) return
+        });
+      })
+      }
+    }
+  })
+  })
 };
 
 exports.conf = {

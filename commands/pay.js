@@ -45,7 +45,7 @@ exports.run = async (client, message, args) => {
             _id: mongoose.Types.ObjectId(),
             userID: user.id,
             serverID: message.guild.id,
-            coins: args[1],
+            coins: parseInt(args[1]),
         });
         
         newCoins.save()
