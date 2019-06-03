@@ -2,6 +2,7 @@ const Discord = require('discord.js');
 const customisation = require('../customisation.json');
 
 exports.run = (client, message, args) => {
+  message.delete();
     let msg = args.slice(1).join(' ');
     let user = message.mentions.users.first();
     if (message.mentions.users.size < 1) return message.reply('You must mention someone for me to dm them.');
@@ -20,12 +21,9 @@ exports.run = (client, message, args) => {
       if (e) {
         return message.channel.send("That user unfortunately locked their DMs")
       }else{
-        message.channel.send("Successfully sent your message")
+        message.channel.send("Successfully sent your message").then(message => {message.delete(1000)})
       }
     });
-    message.channel.fetchMessages({
-      limit: 5
-    }).then(messages => message.channel.bulkDelete(2));
 }
 exports.conf = {
     enabled: true,
