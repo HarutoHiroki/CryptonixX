@@ -36,7 +36,7 @@ exports.run = async (client, message, args) => {
                     .setTitle("Auto Punish")
                     .setColor(0xFF0000)
                     .setTimestamp()
-                    .addField("Stats: ", `Mute - ${punish.mutestatus} \n Ban - ${punish.banstatus}`)
+                    .addField("Stats: ", `Mute - ${punish.mutestatus} \nBan - ${punish.banstatus}`)
                     .addField("Mute: ", punish.mute + " warns")
                     .addField("Ban: ", punish.ban + " warns")
                     .setFooter(`© Cryptonix X Mod Bot by ${customisation.ownername}`);
@@ -64,7 +64,7 @@ exports.run = async (client, message, args) => {
                     .setTitle("Auto Punish")
                     .setColor(0xFF0000)
                     .setTimestamp()
-                    .addField("Stats: ", `Mute - ${punish.mutestatus} \n Ban - ${punish.banstatus}`)
+                    .addField("Stats: ", `Mute - ${punish.mutestatus} \nBan - ${punish.banstatus}`)
                     .addField("Mute: ", punish.mute + " warns")
                     .addField("Ban: ", punish.ban + " warns")
                     .setFooter(`© Cryptonix X Mod Bot by ${customisation.ownername}`);
@@ -93,7 +93,7 @@ exports.run = async (client, message, args) => {
                     .setTitle("Auto Punish")
                     .setColor(0xFF0000)
                     .setTimestamp()
-                    .addField("Stats: ", `Mute - ${newPunish.mutestatus} \n Ban - ${newPunish.banstatus}`)
+                    .addField("Stats: ", `Mute - ${newPunish.mutestatus} \nBan - ${newPunish.banstatus}`)
                     .addField("Mute: ", newPunish.mute + " warns")
                     .addField("Ban: ", newPunish.ban + " warns")
                     .setFooter(`© Cryptonix X Mod Bot by ${customisation.ownername}`);
@@ -106,7 +106,7 @@ exports.run = async (client, message, args) => {
                     .setTitle("Auto Punish")
                     .setColor(0xFF0000)
                     .setTimestamp()
-                    .addField("Stats: ", `Mute - ${punish.mutestatus} \n Ban - ${punish.banstatus}`)
+                    .addField("Stats: ", `Mute - ${punish.mutestatus} \nBan - ${punish.banstatus}`)
                     .addField("Mute: ", punish.mute + " warns")
                     .addField("Ban: ", punish.ban + " warns")
                     .setFooter(`© Cryptonix X Mod Bot by ${customisation.ownername}`);
