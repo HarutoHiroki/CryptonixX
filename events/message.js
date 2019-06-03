@@ -50,14 +50,14 @@ module.exports = async message => {
   const guildid = require('../models/guild.js');
   guildid.findOne({
     dbID: 333,
-    guildID: guild.id,
+    guildID: message.guild.id,
   }, (err, guildsid) => {
     if (err) console.error(err);
     if (!guildsid) {
       const newGuild = new guildid({
         _id: mongoose.Types.ObjectId(),
         dbID: 333,
-        guildID: guild.id,
+        guildID: message.guild.id,
     });
     newGuild.save()
     }
