@@ -165,30 +165,30 @@ const Warn = require('../models/warn.js');
     guildID: message.guild.id
   }, (err, punish) => {
     if(!punish) return
-    if(punish.mutestatus === 'on'){
-      if(result.length >= punish.ban){
-        let user = message.mentions.users.first()
-        if (!message.guild.member(user).bannable) {
-          message.channel.send(`:redTick: I cannot ban that member. My role might not be high enough or it's an internal error.`);
-          return
+      if(punish.mutestatus === 'on'){
+        if(result.length >= punish.ban){
+          let user = message.mentions.users.first()
+          if (!message.guild.member(user).bannable) {
+            message.channel.send(`:redTick: I cannot ban that member. My role might not be high enough or it's an internal error.`);
+            return
+          }
+          message.guild.ban(user).then(() => {
+            let logchannel = message.guild.channels.find(val => val.name === 'logs');
+            if(!logchannel){
+              message.channel.send("***" + user.username + "***" + ` has been auto-banned for exeeding ${punish.ban} warns`)
+              return
+            }else{
+              message.channel.send("***" + user.username + "***" + ` has been auto-banned for exeeding ${punish.ban} warns`)
+              client.channels.get(logchannel.id).send(user.username + ` has been auto-banned for exeeding ${punish.ban} warns`).catch(console.error);
+            }
+            if(user.bot) return;
+            return message.mentions.users.first().send(`You have been auto-banned for having ${punish.ban} or more warns!`).catch(e =>{
+              if(e) return
+            });
+          })
         }
-        message.guild.ban(user).then(() => {
-        let logchannel = message.guild.channels.find(val => val.name === 'logs');
-        if(!logchannel){
-          message.channel.send("***" + user.username + "***" + ` has been auto-banned for exeeding ${punish.ban} warns`)
-          return
-        }else{
-          message.channel.send("***" + user.username + "***" + ` has been auto-banned for exeeding ${punish.ban} warns`)
-          client.channels.get(logchannel.id).send(user.username + ` has been auto-banned for exeeding ${punish.ban} warns`).catch(console.error);
-        }
-        if(user.bot) return;
-        return message.mentions.users.first().send(`You have been auto-banned for having ${punish.ban} or more warns!`).catch(e =>{
-          if(e) return
-        });
-      })
       }
-    }
-  })
+    })
   })
 };
 

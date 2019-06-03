@@ -47,7 +47,7 @@ module.exports = async message => {
     if (!prefix) {
       prefix = '/'
     }
-  const guildid = require('./models/guild.js');
+  const guildid = require('../models/guild.js');
   guildid.findOne({
     dbID: 333,
     guildID: guild.id,
