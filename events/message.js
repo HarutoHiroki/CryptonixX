@@ -79,7 +79,6 @@ if (!message.content.startsWith(prefix)){
   if (parseInt(getRandomInt(4)) == 3) {
   Coins.findOne({
     userID: message.author.id,
-    serverID: message.guild.id,
   }, (err, coins) => {
     if (err) console.error(err);
     if (!coins) {
