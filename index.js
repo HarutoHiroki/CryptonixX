@@ -78,7 +78,8 @@ client.on("guildCreate", guild => {
   }
   const guildid = require('./models/guild.js');
     guildid.findOne({
-      dbID: 333
+      dbID: 333,
+      guildID: guild.id,
     }, (err, guildsid) => {
       if (err) console.error(err);
       if (!guildsid) {

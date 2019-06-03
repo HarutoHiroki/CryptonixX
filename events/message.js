@@ -47,6 +47,21 @@ module.exports = async message => {
     if (!prefix) {
       prefix = '/'
     }
+  const guildid = require('./models/guild.js');
+  guildid.findOne({
+    dbID: 333,
+    guildID: guild.id,
+  }, (err, guildsid) => {
+    if (err) console.error(err);
+    if (!guildsid) {
+      const newGuild = new guildid({
+        _id: mongoose.Types.ObjectId(),
+        dbID: 333,
+        guildID: guild.id,
+    });
+    newGuild.save()
+    }
+  })
 
 function generatecoins(){
   return Math.floor(Math.random() * 15) + 1

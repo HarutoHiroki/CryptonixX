@@ -14,7 +14,7 @@ module.exports = client => {
   },60000);
   setInterval(() => {
     const guildsid = require('../models/guild.js');
-    guildsid.findOne({
+    guildsid.find({
       dbID: 333
     }, (err, guildsid) => {
       if (err) console.error(err);
