@@ -32,6 +32,15 @@ exports.run = async (client, message, args) => {
                     punish.banstatus = 'on'
                     punish.ban = parseInt(amount) 
                     punish.save()
+                    const embed = new Discord.RichEmbed()
+                    .setTitle("Auto Punish")
+                    .setColor(0xFF0000)
+                    .setTimestamp()
+                    .addField("Stats: ", `Mute - ${punish.mutestatus} \n Ban - ${punish.banstatus}`)
+                    .addField("Mute: ", punish.mute + " warns")
+                    .addField("Ban: ", punish.ban + " warns")
+                    .setFooter(`© Cryptonix X Mod Bot by ${customisation.ownername}`);
+                    message.channel.send({embed})
                 }
             })
         }else if(status === 'off'){
@@ -51,6 +60,15 @@ exports.run = async (client, message, args) => {
                 }else{
                     punish.banstatus = 'off'
                     punish.save()
+                    const embed = new Discord.RichEmbed()
+                    .setTitle("Auto Punish")
+                    .setColor(0xFF0000)
+                    .setTimestamp()
+                    .addField("Stats: ", `Mute - ${punish.mutestatus} \n Ban - ${punish.banstatus}`)
+                    .addField("Mute: ", punish.mute + " warns")
+                    .addField("Ban: ", punish.ban + " warns")
+                    .setFooter(`© Cryptonix X Mod Bot by ${customisation.ownername}`);
+                    message.channel.send({embed})
                 }
             })
         }
