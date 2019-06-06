@@ -43,7 +43,7 @@ exports.run = async (client, message) => {
     .addField("Global Prefix", globalprefix, true)
     .addField("Total Users", `${client.users.size}`, true)
     .addField("Total Commands", `${totcmds} commands`, true)
-    .addField("Bot Version", "3.5.0", true)
+    .addField("Bot Version", "3.7.0", true)
     .addField("Library", "Discord.js", true)
     .addField("Ping", Math.round(client.ping) + "ms", true)
     .addField("Uptime", days + "d " + hours + "h " + minutes + "m " + seconds + "." + milliseconds + "s", true)
