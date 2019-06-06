@@ -14,10 +14,12 @@ exports.run = (client, message, args) => {
       if (resp.content === 'cancel' || resp.content === 'no' || resp.content === 'n') {
         return message.channel.send('**Shutdown Aborted.**');
       } else if (resp.content === 'yes' || resp.content === 'y') {
-        message.channel.send("Goodbye :wave:")
-        client.destroy().then(() => { 
-          process.exit();
-        }).catch(console.error);
+        message.channel.send("Goodbye :wave: ... For now :wink:").then(() => {
+          client.destroy().then(() => { 
+            process.exit();
+          }).catch(console.error);
+        })
+        
       }
     } else {
       message.channel.send(`Only \`${validAnswers.join('`, `')}\` are valid, please supply one of those.`).catch(()=>console.error);
