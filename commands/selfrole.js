@@ -1,5 +1,4 @@
 const Discord = require("discord.js");
-const fs = require("fs");
 const customisation = require('../customisation.json');
 const mongoose = require('mongoose');
 exports.run = async (client, message, args, prefix) => {
