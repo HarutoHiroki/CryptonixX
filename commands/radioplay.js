@@ -20,7 +20,9 @@ exports.run = (client, message, args) => {
             connection.playArbitraryInput(`${streamURL}`);
             message.channel.send(embed)
           })
-          .catch(console.log);
+          .catch(e => {
+            if (e) return message.channel.send("Error: ", e)
+          });
       } else {
         message.reply('You are not in a voice channel!');
       }
