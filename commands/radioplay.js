@@ -17,7 +17,7 @@ exports.run = (client, message, args) => {
             .setDescription(`**Connected!** Playing ${args.slice(0, args.length).join(" ")}`)
             .setColor('#ff9900')
             .setFooter(`© Cryptonix X Mod Bot by ${customisation.ownername}`);
-            connection.playArbitraryInput(`${streamURL}`);
+            connection.playArbitraryInput(streamURL);
             message.channel.send(embed)
           })
           .catch(e => {
