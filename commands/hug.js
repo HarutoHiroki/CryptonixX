@@ -5,7 +5,7 @@ const customisation = require('../customisation.json');
 exports.run = async (client, message, args, tools) => {
     if (!message.mentions.users.first()) return message.reply("You need to mention someone to hug them");
     const { body } = await superagent
-    .get("https://nekos.life/api/hug");
+    .get("https://nekos.life/api/v2/img/hug");
     
     const embed = new Discord.RichEmbed()
     .setColor("#ff9900")
@@ -16,14 +16,14 @@ exports.run = async (client, message, args, tools) => {
 };
 
 exports.conf = {
-    enabled: true,
-    guildOnly: false,
-    aliases: [],
-    permLevel: 0
-  };
-  
-  exports.help = {
-    name: 'hug',
-    description: 'Hugs someone OwO',
-    usage: 'hug'
-  };
+  enabled: true,
+  guildOnly: false,
+  aliases: [],
+  permLevel: 0
+};
+
+exports.help = {
+  name: 'hug',
+  description: 'Hugs someone OwO',
+  usage: 'hug'
+};
