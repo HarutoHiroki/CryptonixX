@@ -172,8 +172,7 @@ let antilink = await db.fetch(`antilink_${message.guild.id}`);
     }
     if (cmd) {
       if (perms < cmd.conf.permLevel) {
-        console.log("Command: /" + cmd.help.name)
-        console.log("Guild: " + message.guild.name)
+        console.log("Command: /" + cmd.help.name + " - Guild: " + message.guild.name + " ID: " + message.guild.id)
         return;
       }
       //message.react("a:yayyy:497742636439044096")
