@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 exports.run = async (client, message, args, prefix) => {
     const selfrole = require("../models/selfrole.js")
     if(!message.member.hasPermission("ADMINISTRATOR")) return message.reply(`:facepalm: You can't do that BOIII! :facepalm:`);
-    if(!args.join(" ") || args[0] == "help") return message.reply(`Usage: [p]selfrole add role1,role2,... ([p] is the bot's prefix); [p]selfrole clear (to clear the selfrole list)`);
+    if(!args.join(" ") || args[0] == "help") return message.reply(`Usage: [p]selfrole add roleid1,roleid2,... ([p] is the bot's prefix); [p]selfrole clear (to clear the selfrole list)`);
     if(args[0] !== "add" && args[0] !== "clear" && args[0] !== "list") return message.reply(`Usage: [p]selfrole role1,role2,... ([p] is the bot's prefix); [p]selfrole clear (to clear the selfrole list)`);
     if(args[0] === "clear") {
         var MongoClient = require('mongodb').MongoClient;
@@ -26,6 +26,7 @@ exports.run = async (client, message, args, prefix) => {
           });
     }
     if(args[0] === "add"){
+        if (!args[1]) return message.reply(`Usage: [p]selfrole add roleid1,roleid2,... ([p] is the bot's prefix); [p]selfrole clear (to clear the selfrole list)`);
         srole = args[1].split(',')
         let allowedString = ''
         fsrole = ''

@@ -124,7 +124,7 @@ mongoose.connect('mongodb://localhost:27017/DiscordDB', { useNewUrlParser: true 
     let autoRole = await db.fetch(`autorole_${member.guild.id}`);
     if (!autoRole) return;
     if (autoRole === 'none') return;
-    let autorole = member.guild.roles.get('name', autoRole);
+    let autorole = member.guild.roles.get(autoRole);
     member.addRole(autorole);
 });
 

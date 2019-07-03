@@ -5,7 +5,7 @@ const customisation = require('../customisation.json');
 exports.run = async (client, message, args, prefix) => {
     const selfrole = require("../models/selfrole.js")
     let member = message.guild.member(message.author);
-    if(!args[0] || args[0] == "help") return message.reply(`Usage: [p]abandonrole roleID ([p] is the bot's prefix)`);
+    if(!args[0] || args[0] == "help") return message.reply(`Usage: [p]getrole roleID ([p] is the bot's prefix)`);
     selfrole.findOne({
         serverID: message.guild.id
     }, (err, srid) => {
