@@ -10,15 +10,15 @@ exports.run = (client, message, args) =>{
   const serverQueue = music.serverQueue(message.guild)
     if (!serverQueue) return message.channel.send('There is nothing playing.');
     if (serverQueue.loop !== true) {
-        console.log(serverQueue.loop)
+        //console.log(serverQueue.loop)
         serverQueue.loop = true;
-        console.log(serverQueue.loop)
+        //console.log(serverQueue.loop)
         return message.channel.send("Looping!")
     }
     if (serverQueue.loop !== false){
-        console.log(serverQueue.loop)
+        //console.log(serverQueue.loop)
         serverQueue.loop = false;
-        console.log(serverQueue.loop)
+        //console.log(serverQueue.loop)
         return message.channel.send("Stopped Looping!")
     }
     
