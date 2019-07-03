@@ -40,7 +40,10 @@ module.exports = {
                     serverQueue.songs.shift();
                     play(guild, serverQueue.songs[0]);
                 })
-                .on('error', error => console.error(error));
+                .on('error', error => {
+                    message.channel.send(`An error occured: ${error}`)
+                    return console.error(error)
+                });
             dispatcher.setVolumeLogarithmic(serverQueue.volume / 100);
         
             serverQueue.textChannel.send(`🎶 Start playing: **${song.title}**`);
