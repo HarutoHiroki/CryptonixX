@@ -34,14 +34,14 @@ module.exports = {
         
             const dispatcher = serverQueue.connection.playOpusStream(await ytdl(song.url))
                 .on('end', async reason => {
-                    if (reason === 'Stream is not generating quickly enough.') //console.log('Song ended.');
-                    //delse console.log(reason);
+                    //if (reason === 'Stream is not generating quickly enough.') console.log('Song ended.');
+                    //console.log(serverQueue.loop)
                     if (serverQueue.loop === true) await serverQueue.songs.push(song)
                     serverQueue.songs.shift();
                     play(guild, serverQueue.songs[0]);
                 })
                 .on('error', error => console.error(error));
-            dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
+            dispatcher.setVolumeLogarithmic(serverQueue.volume / 100);
         
             serverQueue.textChannel.send(`🎶 Start playing: **${song.title}**`);
         }
@@ -58,7 +58,7 @@ module.exports = {
                 voiceChannel: voiceChannel,
                 connection: null,
                 songs: [],
-                volume: 5,
+                volume: 100,
                 playing: true,
                 loop: false
             };
