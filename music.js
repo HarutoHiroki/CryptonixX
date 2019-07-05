@@ -13,6 +13,10 @@ module.exports = {
     serverQueue(guild) {
         return queue.get(guild.id);
     },
+    getVoice(guild) {
+        const serverQueue = queue.get(guild.id);
+        return serverQueue.voiceChannel
+    },
     async handleVideo(video, message, voiceChannel, playlist = false) {
         async function play(guild, song) {
             const serverQueue = queue.get(guild.id);

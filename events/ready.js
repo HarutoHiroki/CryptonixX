@@ -7,6 +7,7 @@ const DBL = require("dblapi.js");
 const dbl = new DBL(settings.dblapitoken, client);
 const fs = require('fs');
 const mongoose = require('mongoose');
+const music = require("../music");
 module.exports = client => {
   setInterval(() => {
     dbl.postStats(client.guilds.size);
