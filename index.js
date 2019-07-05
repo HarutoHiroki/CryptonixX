@@ -122,7 +122,7 @@ mongoose.connect('mongodb://localhost:27017/DiscordDB', { useNewUrlParser: true 
 
     let welcomer = await db.fetch(`welcomer_${member.guild.id}`);
     let channelID = await db.fetch(`welcomerid_${member.guild.id}`);
-    if (!welcomer) return;
+    if (!welcomer || !channelID) return;
     prefinal = welcomer.replace('{USER}', `<@${member.id}>`);
     finalstr = prefinal.replace('{SERVER}', member.guild.name);
     
