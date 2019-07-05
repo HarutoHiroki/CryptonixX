@@ -119,6 +119,15 @@ mongoose.connect('mongodb://localhost:27017/DiscordDB', { useNewUrlParser: true 
     if (autoRole === 'none') return;
     let autorole = member.guild.roles.get(autoRole);
     member.addRole(autorole);
+
+    let welcomer = await db.fetch(`welcomer_${member.guild.id}`);
+    let channelID = await db.fetch(`welcomerid_${member.guild.id}`);
+    if (!welcomer) return;
+    prefinal = welcomer.replace('{USER}', `<@${member.id}>`);
+    finalstr = prefinal.replace('{SERVER}', member.guild.name);
+    
+    let channel = client.channels.get(channelID);
+    channel.send(finalstr);
 });
 
 //client command elevation(permLevel)
