@@ -151,7 +151,7 @@ let antilink = await db.fetch(`antilink_${message.guild.id}`);
         if (message.author.id !== settings.ownerid){
           if (!message.member.hasPermission("MANAGE_ROLES_OR_PERMISSIONS")){
             message.delete();
-            message.reply(`OI ${message.author.username}, wanna Be Banned BOI? NO INVITE LINKS!`);
+            message.reply(`OI ${message.author.username}, don't advertise your stuff, or ban!`);
             return;
           }
         }
