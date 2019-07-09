@@ -25,7 +25,7 @@ exports.conf = {
 };
 
 exports.help = {
-  name: 'queue',
-  description: 'List the song queue.',
-  usage: 'queue'
+  name: 'remove',
+  description: 'Remove a song.',
+  usage: 'remove [number on queue]'
 };
