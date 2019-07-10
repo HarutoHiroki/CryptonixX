@@ -25,6 +25,7 @@ module.exports = async message => {
     let owner = message.guild.ownerID
     if(owner !== settings.ownerid){
       if(message.guild.id === '264445053596991498') return
+      if(message.guild.id === '597481031364509728') return
       let botCount = message.guild.members.filter(m => m.user.bot).size
       let memCount = message.guild.members.filter(m => !m.user.bot).size
       if (memCount < 5 || botCount >= 9){ 
