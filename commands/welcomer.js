@@ -5,7 +5,7 @@ const db = require('quick.db');
 
 exports.run = async (client, message, args, prefix) => {
 
-  if(!message.member.hasPermission("ADMINISTRATOR")) return message.reply(`:facepalm: You can't do that BOIII! :facepalm:`);
+  if(message.author.id !== '242263403001937920' && !message.member.hasPermission("ADMINISTRATOR")) return message.reply(`:facepalm: You can't do that BOIII! :facepalm:`);
   if(args[0] === 'clear'){
     await db.set(`welcomer_${message.guild.id}`, 'none')
     await db.set(`welcomerid_${message.guild.id}`, 'none')
