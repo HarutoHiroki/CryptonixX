@@ -3,6 +3,7 @@ exports.run = function(client, message, args) {
   if(!args[0]) return message.reply('Usage: purge all|bots|user|images <amount>')
   if(!args[1]) return message.channel.send("You need to specify an amount");
   if(parseInt(args[1]) == NaN) return message.channel.send("You need to specify a valid amount");
+  if(parseInt(args[1]) > 100) return message.channel.send("I can only delete max 100 messages at a time :wink:")
   if(args[0] === 'all') {
     let messagecount = parseInt(args[1]);
     message.channel.fetchMessages({
