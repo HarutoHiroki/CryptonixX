@@ -11,18 +11,13 @@ const music = require("../music");
 module.exports = client => {
   setInterval(() => {
     dbl.postStats(client.guilds.size);
+  },120000);
+
+  setInterval(() => {
+    dbl.postStats(client.guilds.size);
     client.user.setPresence({ game: { name: `${activities[Math.floor(Math.random() * activities.length) + 1]}`, type: 1, url: "https://www.twitch.tv/hiroaki_haruto" }})
   },60000);
-  setInterval(() =>{
-    let voiceChannel = client.voiceChannel
-    if(!voiceChannel) return;
-    if(voiceChannel.members.size === 1){
-      message.channel.send("No one listening, Leaving voice.")
-      serverQueue.voiceChannel.leave();
-      queue.delete(guild.id);
-      return;
-    }
-  },500)
+
   setInterval(() => {
     const guildsid = require('../models/guild.js');
     guildsid.find({
