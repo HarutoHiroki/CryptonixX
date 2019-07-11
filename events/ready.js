@@ -11,7 +11,7 @@ const music = require("../music");
 module.exports = client => {
   setInterval(() => {
     dbl.postStats(client.guilds.size);
-  },120000);
+  },300000);
 
   setInterval(() => {
     dbl.postStats(client.guilds.size);
