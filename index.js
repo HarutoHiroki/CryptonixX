@@ -48,8 +48,8 @@ client.on("guildCreate", guild => {
   //console.log(owner)
   if(owner !== settings.ownerid){
     if(guild.id === '264445053596991498') return
-    if(guild.id === '597481031364509728') return
-    let channel = client.channels.get(guild.systemChannelID || channelID);
+    if(guild.id !== '597481031364509728') {
+      let channel = client.channels.get(guild.systemChannelID || channelID);
     let botCount = client.guilds.get(guild.id).members.filter(m => m.user.bot).size
     //console.log(botCount)
     let memCount = client.guilds.get(guild.id).members.filter(m => !m.user.bot).size
@@ -69,6 +69,7 @@ client.on("guildCreate", guild => {
           guild.leave(guild.id)
         }
       })
+    }
   }
   const guildid = require('./models/guild.js');
     guildid.findOne({
@@ -116,11 +117,13 @@ mongoose.connect('mongodb://localhost:27017/DiscordDB', { useNewUrlParser: true 
 
   client.on('guildMemberAdd', async (member) => {
     let autoRole = await db.fetch(`autorole_${member.guild.id}`);
-    if (!autoRole) return;
-    if (autoRole === 'none') return;
-    let autorole = member.guild.roles.get(autoRole);
-    member.addRole(autorole);
-
+    if (autoRole) {
+      if (autoRole !== 'none') {
+        let autorole = member.guild.roles.get(autoRole);
+      member.addRole(autorole);
+      }
+    }
+    
     let welcomer = await db.fetch(`welcomer_${member.guild.id}`);
     let channelID = await db.fetch(`welcomerid_${member.guild.id}`);
     if (!welcomer || !channelID) return;
