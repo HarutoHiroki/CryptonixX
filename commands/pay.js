@@ -14,8 +14,7 @@ exports.run = async (client, message, args) => {
   if (user === message.author) return message.channel.send("You can't pay yourself coins:facepalm:");
   
   Coins.findOne({
-    userID: message.author.id,
-    serverID: message.guild.id,
+    userID: message.author.id
   }, (err, coins) => {
     if (err) console.error(err);
     if (!coins) {
@@ -26,8 +25,10 @@ exports.run = async (client, message, args) => {
             coins: 0,
         });
         newCoins.save()
-        return message.reply("You don't have enough coins!")        
-      } else{
+        return message.reply("You don't have enough coins!")  
+      }else if(coins.coins < parseInt(args[1])){
+        return message.reply("You don't have enough coins!")  
+      } else {
         coins.coins = parseInt(coins.coins) - parseInt(args[1]);
         coins.save()
             //.then(result => console.log(result))
@@ -36,8 +37,7 @@ exports.run = async (client, message, args) => {
     });
 
   Coins.findOne({
-    userID: user.id,
-    serverID: message.guild.id,
+    userID: user.id
   }, (err, coins) => {
     if (err) console.error(err);
     if (!coins) {
@@ -58,12 +58,12 @@ exports.run = async (client, message, args) => {
             .catch(err => console.error(err));
     }
       
-const embed = new Discord.RichEmbed()
-.setColor(Math.floor(Math.random()*16777215))
-.addField(`COINSSS!`,`You have paid ${user.username} ${args[1]} coins!`)
-.setFooter(`© Cryptonix X Mod Bot by ${customisation.ownername}`);
-
-message.channel.send({embed})
+    const embed = new Discord.RichEmbed()
+    .setColor(Math.floor(Math.random()*16777215))
+    .addField(`COINSSS!`,`You have paid ${user.username} ${args[1]} coins!`)
+    .setFooter(`© Cryptonix X Mod Bot by ${customisation.ownername}`);
+      
+    message.channel.send({embed})
   });
 
 }

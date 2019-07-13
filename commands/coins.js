@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 
 exports.run = async (client, message, args) => {
   const Coins = require('../models/coins.js');
-  let user = message.author.id || message.mentions.users.first().id
+  let user = message.mentions.users.first().id || message.author.id
 Coins.findOne({
   userID: user
 }, (err, coins) => {
@@ -14,7 +14,7 @@ Coins.findOne({
   }else{
     const embed = new Discord.RichEmbed()
     .setColor(Math.floor(Math.random()*16777215))
-    .addField(`COINSSS!`,`You have ${coins.coins} coins!`)
+    .addField(`COINSSS!`,`<@${user}> have ${coins.coins} coins!`)
     .setFooter(`© Cryptonix X Mod Bot by ${customisation.ownername}`);
     
     message.channel.send({embed}).then(message => {message.delete(10000)});
