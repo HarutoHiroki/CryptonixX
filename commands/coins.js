@@ -4,7 +4,11 @@ const mongoose = require('mongoose');
 
 exports.run = async (client, message, args) => {
   const Coins = require('../models/coins.js');
-  let user = message.mentions.users.first().id || message.author.id
+  if(message.mentions.users.first()){
+    user = message.mentions.users.first().id
+  } else{
+    user = message.author.id
+  }
 Coins.findOne({
   userID: user
 }, (err, coins) => {

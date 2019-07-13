@@ -4,6 +4,8 @@ punishSchema = mongoose.Schema({
     guildID: String,
     mutestatus: String,
     mute: Number,
+    kickstatus: String,
+    kick: Number,
     banstatus: String,
     ban: Number
 });

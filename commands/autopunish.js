@@ -23,7 +23,9 @@ exports.run = async (client, message, args) => {
                         _id: mongoose.Types.ObjectId(),
                         guildID: message.guild.id,
                         mutestatus: "off",
-                        mute: 3,
+                        mute: 2,
+                        kickstatus: "off",
+                        kick: 3,
                         banstatus: 'on',
                         ban: parseInt(amount)                
                     });
@@ -36,8 +38,9 @@ exports.run = async (client, message, args) => {
                     .setTitle("Auto Punish")
                     .setColor(0xFF0000)
                     .setTimestamp()
-                    .addField("Stats: ", `Mute - ${punish.mutestatus} \nBan - ${punish.banstatus}`)
+                    .addField("Stats: ", `Mute - ${punish.mutestatus} \n Kick - ${punish.kickstatus}\n Ban - ${punish.banstatus}`)
                     .addField("Mute: ", punish.mute + " warns")
+                    .addField("Kick", punish.kick + " warns")
                     .addField("Ban: ", punish.ban + " warns")
                     .setFooter(`© Cryptonix X Mod Bot by ${customisation.ownername}`);
                     message.channel.send({embed})
@@ -52,7 +55,9 @@ exports.run = async (client, message, args) => {
                         _id: mongoose.Types.ObjectId(),
                         guildID: message.guild.id,
                         mutestatus: "off",
-                        mute: 3,
+                        mute: 2,
+                        kickstatus: "off",
+                        kick: 3,
                         banstatus: 'off',
                         ban: 5                
                     });
@@ -64,8 +69,9 @@ exports.run = async (client, message, args) => {
                     .setTitle("Auto Punish")
                     .setColor(0xFF0000)
                     .setTimestamp()
-                    .addField("Stats: ", `Mute - ${punish.mutestatus} \nBan - ${punish.banstatus}`)
+                    .addField("Stats: ", `Mute - ${punish.mutestatus} \n Kick - ${punish.kickstatus}\n Ban - ${punish.banstatus}`)
                     .addField("Mute: ", punish.mute + " warns")
+                    .addField("Kick", punish.kick + " warns")
                     .addField("Ban: ", punish.ban + " warns")
                     .setFooter(`© Cryptonix X Mod Bot by ${customisation.ownername}`);
                     message.channel.send({embed})
@@ -85,6 +91,8 @@ exports.run = async (client, message, args) => {
                         guildID: message.guild.id,
                         mutestatus: "on",
                         mute: amount,
+                        kickstatus: "off",
+                        kick: 3,
                         banstatus: 'off',
                         ban: 5                
                     });
@@ -106,8 +114,9 @@ exports.run = async (client, message, args) => {
                     .setTitle("Auto Punish")
                     .setColor(0xFF0000)
                     .setTimestamp()
-                    .addField("Stats: ", `Mute - ${punish.mutestatus} \nBan - ${punish.banstatus}`)
+                    .addField("Stats: ", `Mute - ${punish.mutestatus} \n Kick - ${punish.kickstatus}\n Ban - ${punish.banstatus}`)
                     .addField("Mute: ", punish.mute + " warns")
+                    .addField("Kick", punish.kick + " warns")
                     .addField("Ban: ", punish.ban + " warns")
                     .setFooter(`© Cryptonix X Mod Bot by ${customisation.ownername}`);
                     message.channel.send({embed})
@@ -122,7 +131,9 @@ exports.run = async (client, message, args) => {
                         _id: mongoose.Types.ObjectId(),
                         guildID: message.guild.id,
                         mutestatus: "off",
-                        mute: 3,
+                        mute: 2,
+                        kickstatus: "off",
+                        kick: 3,
                         banstatus: 'off',
                         ban: 5                
                     });
@@ -131,9 +142,10 @@ exports.run = async (client, message, args) => {
                     .setTitle("Auto Punish")
                     .setColor(0xFF0000)
                     .setTimestamp()
-                    .addField("Stats: ", `Mute - ${newPunish.mutestatus} \n Ban - ${newPunish.banstatus}`)
-                    .addField("Mute: ", newPunish.mute + " warns")
-                    .addField("Ban: ", newPunish.ban + " warns")
+                    .addField("Stats: ", `Mute - ${punish.mutestatus} \n Kick - ${punish.kickstatus}\n Ban - ${punish.banstatus}`)
+                    .addField("Mute: ", punish.mute + " warns")
+                    .addField("Kick", punish.kick + " warns")
+                    .addField("Ban: ", punish.ban + " warns")
                     .setFooter(`© Cryptonix X Mod Bot by ${customisation.ownername}`);
                     message.channel.send({embed})
                 }else{
@@ -143,8 +155,96 @@ exports.run = async (client, message, args) => {
                     .setTitle("Auto Punish")
                     .setColor(0xFF0000)
                     .setTimestamp()
-                    .addField("Stats: ", `Mute - ${punish.mutestatus} \n Ban - ${punish.banstatus}`)
+                    .addField("Stats: ", `Mute - ${punish.mutestatus} \n Kick - ${punish.kickstatus}\n Ban - ${punish.banstatus}`)
                     .addField("Mute: ", punish.mute + " warns")
+                    .addField("Kick", punish.kick + " warns")
+                    .addField("Ban: ", punish.ban + " warns")
+                    .setFooter(`© Cryptonix X Mod Bot by ${customisation.ownername}`);
+                    message.channel.send({embed})
+                }
+            })
+        }
+    }
+    if(type === 'kick'){
+        if(status === 'on'){
+            if(!amount || parseInt(amount) === NaN) return message.reply("Please supply a valid amount of Warns for the Punishment")
+            const gpunish = punishstats.findOne({
+                guildID: message.guild.id,
+            }, (err, punish) => {
+                if(!punish){
+                    const newPunish = new punishstats({
+                        _id: mongoose.Types.ObjectId(),
+                        guildID: message.guild.id,
+                        mutestatus: "off",
+                        mute: 2,
+                        kickstatus: "on",
+                        kick: amount,
+                        banstatus: 'off',
+                        ban: 5                
+                    });
+                    newPunish.save()
+                    const embed = new Discord.RichEmbed()
+                    .setTitle("Auto Punish")
+                    .setColor(0xFF0000)
+                    .setTimestamp()
+                    .addField("Stats: ", `Mute - ${punish.mutestatus} \n Kick - ${punish.kickstatus}\n Ban - ${punish.banstatus}`)
+                    .addField("Mute: ", punish.mute + " warns")
+                    .addField("Kick", punish.kick + " warns")
+                    .addField("Ban: ", punish.ban + " warns")
+                    .setFooter(`© Cryptonix X Mod Bot by ${customisation.ownername}`);
+                    message.channel.send({embed})
+                }else{
+                    punish.kickstatus = 'on'
+                    punish.kick = parseInt(amount) 
+                    punish.save()
+                    const embed = new Discord.RichEmbed()
+                    .setTitle("Auto Punish")
+                    .setColor(0xFF0000)
+                    .setTimestamp()
+                    .addField("Stats: ", `Mute - ${punish.mutestatus} \n Kick - ${punish.kickstatus}\n Ban - ${punish.banstatus}`)
+                    .addField("Mute: ", punish.mute + " warns")
+                    .addField("Kick", punish.kick + " warns")
+                    .addField("Ban: ", punish.ban + " warns")
+                    .setFooter(`© Cryptonix X Mod Bot by ${customisation.ownername}`);
+                    message.channel.send({embed})
+                }
+            })
+        }else if(status === 'off'){
+            const gpunish = punishstats.findOne({
+                guildID: message.guild.id
+            }, (err, punish) => {
+                if(!punish){
+                    const newPunish = new punishstats({
+                        _id: mongoose.Types.ObjectId(),
+                        guildID: message.guild.id,
+                        mutestatus: "off",
+                        mute: 2,
+                        kickstatus: "off",
+                        kick: 3,
+                        banstatus: 'off',
+                        ban: 5                
+                    });
+                    newPunish.save()
+                    const embed = new Discord.RichEmbed()
+                    .setTitle("Auto Punish")
+                    .setColor(0xFF0000)
+                    .setTimestamp()
+                    .addField("Stats: ", `Mute - ${punish.mutestatus} \n Kick - ${punish.kickstatus}\n Ban - ${punish.banstatus}`)
+                    .addField("Mute: ", punish.mute + " warns")
+                    .addField("Kick", punish.kick + " warns")
+                    .addField("Ban: ", punish.ban + " warns")
+                    .setFooter(`© Cryptonix X Mod Bot by ${customisation.ownername}`);
+                    message.channel.send({embed})
+                }else{
+                    punish.kickstatus = 'off'
+                    punish.save()
+                    const embed = new Discord.RichEmbed()
+                    .setTitle("Auto Punish")
+                    .setColor(0xFF0000)
+                    .setTimestamp()
+                    .addField("Stats: ", `Mute - ${punish.mutestatus} \n Kick - ${punish.kickstatus}\n Ban - ${punish.banstatus}`)
+                    .addField("Mute: ", punish.mute + " warns")
+                    .addField("Kick", punish.kick + " warns")
                     .addField("Ban: ", punish.ban + " warns")
                     .setFooter(`© Cryptonix X Mod Bot by ${customisation.ownername}`);
                     message.channel.send({embed})
@@ -161,7 +261,9 @@ exports.run = async (client, message, args) => {
                     _id: mongoose.Types.ObjectId(),
                     guildID: message.guild.id,
                     mutestatus: "off",
-                    mute: 3,
+                    mute: 2,
+                    kickstatus: "off",
+                    kick: 3,
                     banstatus: 'off',
                     ban: 5                
                 });
@@ -170,9 +272,10 @@ exports.run = async (client, message, args) => {
                 .setTitle("Auto Punish")
                 .setColor(0xFF0000)
                 .setTimestamp()
-                .addField("Stats: ", `Mute - ${newPunish.mutestatus} \n Ban - ${newPunish.banstatus}`)
-                .addField("Mute: ", newPunish.mute + " warns")
-                .addField("Ban: ", newPunish.ban + " warns")
+                .addField("Stats: ", `Mute - ${punish.mutestatus} \n Kick - ${punish.kickstatus}\n Ban - ${punish.banstatus}`)
+                .addField("Mute: ", punish.mute + " warns")
+                .addField("Kick", punish.kick + " warns")
+                .addField("Ban: ", punish.ban + " warns")
                 .setFooter(`© Cryptonix X Mod Bot by ${customisation.ownername}`);
                 message.channel.send({embed})
             }else{
@@ -180,8 +283,9 @@ exports.run = async (client, message, args) => {
                 .setTitle("Auto Punish")
                 .setColor(0xFF0000)
                 .setTimestamp()
-                .addField("Stats: ", `Mute - ${punish.mutestatus} \n Ban - ${punish.banstatus}`)
+                .addField("Stats: ", `Mute - ${punish.mutestatus} \n Kick - ${punish.kickstatus}\n Ban - ${punish.banstatus}`)
                 .addField("Mute: ", punish.mute + " warns")
+                .addField("Kick", punish.kick + " warns")
                 .addField("Ban: ", punish.ban + " warns")
                 .setFooter(`© Cryptonix X Mod Bot by ${customisation.ownername}`);
                 message.channel.send({embed})
