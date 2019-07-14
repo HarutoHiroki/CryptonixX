@@ -90,7 +90,7 @@ exports.run = async (client, message, args) => {
                         _id: mongoose.Types.ObjectId(),
                         guildID: message.guild.id,
                         mutestatus: "on",
-                        mute: amount,
+                        mute: parseInt(amount),
                         kickstatus: "off",
                         kick: 3,
                         banstatus: 'off',
@@ -178,7 +178,7 @@ exports.run = async (client, message, args) => {
                         mutestatus: "off",
                         mute: 2,
                         kickstatus: "on",
-                        kick: amount,
+                        kick: parseInt(amount),
                         banstatus: 'off',
                         ban: 5                
                     });
