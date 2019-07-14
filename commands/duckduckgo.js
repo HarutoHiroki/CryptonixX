@@ -33,7 +33,7 @@ exports.run = async (client, message, args) => {
       //message.channel.send(results.links)
       message.channel.send(`\n**${results[i].title}** \n${results[i].body} \n${results[i].url}`)
         }
-      console.log(results)
+      //console.log(results)
     })
     .catch((error) => { 
       message.channel.send("There was an error!\n" + error);
