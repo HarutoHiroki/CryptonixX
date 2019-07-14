@@ -13,7 +13,7 @@ exports.run = async (client, message, args) => {
       screenshot: false,
       wait: 0
     };
-
+    let string = ''
     //search.duckduckgo(args.join("+"), options)
     search({ query: args.join("+"), maxResults: 3 })
     //.then(function(results){
@@ -31,9 +31,10 @@ exports.run = async (client, message, args) => {
       //  if (e) return message.channel.send("There was an error!\n" + e);
       //});
       //message.channel.send(results.links)
-      message.channel.send(`\n**${results[i].title}** \n${results[i].body} \n${results[i].url}`)
+      string = string + `\n**${results[i].title}** \n${results[i].body} \n${results[i].url}`
         }
       //console.log(results)
+      message.channel.send(string)
     })
     .catch((error) => { 
       message.channel.send("There was an error!\n" + error);
