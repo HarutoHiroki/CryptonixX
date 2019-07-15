@@ -13,7 +13,7 @@ exports.run = (client, message, args) => {
   if (message.mentions.users.first().id === "242263403001937920") return message.channel.send("You can't ban my Developer:wink:");
   if (reason.length < 1) reason = 'No reason supplied.';
   //let botRolePosition = message.guild.member(client.user).highestRole.position;
-    let rolePosition = role.position;
+    let rolePosition = message.mentions.users.first().highestRole.position;
     let userRolePossition = message.member.highestRole.position;
     if (userRolePossition <= rolePosition) return message.channel.send("❌**Error:** Cannor ban that member because they have roles that is higher or equal to you.")
   //if (botRolePosition <= rolePosition) return message.channel.send("❌**Error:** Failed to add the role to the user because my highest role is lower than the specified role.");
