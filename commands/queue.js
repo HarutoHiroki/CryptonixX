@@ -9,24 +9,21 @@ const music = require('../music')
 exports.run = (client, message, args) =>{
     const serverQueue = music.serverQueue(message.guild)
     if (!serverQueue) return message.channel.send('There is nothing playing.');
-    let str = serverQueue.songs.map(song => `**-** ${song.title}`).join('\n')
-    let newStr = str.match(/.{1,2000}/g);
-//    for(i = 0; i <= newStr.length; i++){
-//      message.channel.send(`
-//__**Song queue:**__
-//
-//${newStr[i]}
-//
-//**Now playing:** ${serverQueue.songs[0].title}
-//		`);
-//    }
-		message.channel.send(`
+    let str = ''
+    for(y = 0; y < serverQueue.songs.length; y++) {
+      str = str + `**${y}.**` + serverQueue.songs[y].title + '\n'
+    }
+    // serverQueue.songs.map(song => `**-** ${song.title}`).join('\n')
+    let newStr = str.match(/(.|[\r\n]){1,2000}/g);
+    for(i = 0; i < newStr.length; i++){
+      message.channel.send(`
 __**Song queue:**__
 
-${str}
+${newStr[i]}
 
 **Now playing:** ${serverQueue.songs[0].title}
 		`);
+    }
 }
 exports.conf = {
   enabled: true,
