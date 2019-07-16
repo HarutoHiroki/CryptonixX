@@ -10,7 +10,7 @@ exports.run = (client, message) => {
   const embed = new Discord.RichEmbed()
   .setColor(Math.floor(Math.random()*16777215))
   .setTitle("Servers that have Cryptonix X", '')
-  .addField('Servers:', `\n${serverlist}`)
+  .setDescription(serverlist)
   .setFooter(`© Cryptonix X Mod Bot by ${customisation.ownername}`);
 
   message.channel.send({embed});
