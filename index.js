@@ -56,6 +56,9 @@ client.on("guildCreate", guild => {
     //console.log(memCount)
     if (memCount < 5 || botCount >= 9){ 
       guild.owner.send("This server have too much bots (9+) or has too few members. Try again later!")
+      .catch(e =>{
+        if(e) console.log(e)
+      })
       return guild.leave()
     }
     channel.send(`Thanks for inviting me into this server! Please do /info and /help for the informations you need in order for the bot to work properly. Do /suggest or /bug if there's any suggestions or bug you found. THANKS`);
