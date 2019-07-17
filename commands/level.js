@@ -21,7 +21,7 @@ exports.run = async (client, message, args) => {
     let curxp = xp.xp;
     
     let curlvl = xp.level;
-    let nxtLvl = xp.level * 1000 + 1000;
+    let nxtLvl = xp.level * 1000 + Math.floor(Math.random(xp.level*xp.level*10) * Math.floor(xp.level*15)) * 40;
     let difference = nxtLvl - curxp;
     
     let embed = new Discord.RichEmbed()
