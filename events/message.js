@@ -99,7 +99,7 @@ if (!message.content.startsWith(prefix)){
     }else if (parseInt(getRandomInt(3)) == 2) {
       let xpstatus = await db.fetch(`xpstatus_${message.guild.id}`);
       if (xpstatus){
-        if (xpstatus === 'on'){
+        if (xpstatus == 'on'){
           Xp.findOne({
             userID: message.author.id,
             serverID: message.guild.id,
