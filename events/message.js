@@ -120,7 +120,7 @@ if (!message.content.startsWith(prefix)){
                 xp.xp = parseInt(xp.xp) + parseInt(generatexp());
                 await xp.save()
                     .catch(err => console.error(err));
-                let nxtLvl = xp.level * 1000 + Math.floor(Math.random(xp.level*xp.level*10) * Math.floor(xp.level*15)) * 40;
+                let nxtLvl = xp.level * 1000 + Math.floor(Math.random(xp.level*xp.level*10) * Math.floor(xp.level*15)) * 55;
                 if(nxtLvl <= xp.xp) {
                   xp.level = parseInt(xp.level) + 1;
                   xp.save()
