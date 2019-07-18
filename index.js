@@ -137,6 +137,37 @@ mongoose.connect('mongodb://localhost:27017/DiscordDB', { useNewUrlParser: true 
     channel.send(finalstr);
 });
 
+client.on('guildMemberRemove', async (member) => {
+  const Xp = require('./models/xp.js')
+  let user = member
+  Xp.findOne({
+    userID: user.id,
+    serverID: member.guild.id,
+  }, (err, xp) => {
+    if (err) console.error(err);
+    if (!xp) {
+      return
+    }else{
+      const myquery = {
+        userID: user.id,
+        serverID: member.guild.id,
+      };
+      const MongoClient = require('mongodb').MongoClient;
+      const url = "mongodb://localhost:27017/";
+      MongoClient.connect(url, { useNewUrlParser: true }, function(err, db) {
+        if (err) throw err;
+        const dbo = db.db("DiscordDB");
+        dbo.collection("xps").deleteMany(myquery, function(err, obj) {
+          if (err){ 
+            throw err
+          };
+          db.close();
+        });
+      })
+    }
+  })
+});
+
 //client command elevation(permLevel)
 client.elevation = message => {
   if (message.channel.type === 'dm') return;

@@ -3,7 +3,7 @@ xpSchema = mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
     userID: String,
     serverID: String,
-    level: String,
-    xp: String
+    level: Number,
+    xp: Number
 });
 module.exports = mongoose.model("Xp",xpSchema)
