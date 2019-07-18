@@ -21,16 +21,32 @@ exports.run = async (bot, message, args) => {
                 if(i > result.length - 1) {
                     break;
                 }
-                //console.log(result[i].userID)
-                const user = await message.guild.members.get(`${result[i].userID}`).user
-                if(message.guild.members.get(`${result[i].userID}`) === undefined) {
-                    user = "user left guild"
-                }
+                if(message.guild.members.get(`${result[i].userID}`) == undefined) {
+                    const myquery = {
+                        userID: result[i].userID,
+                        serverID: message.guild.id,
+                    };
+                    const MongoClient = require('mongodb').MongoClient;
+                    const url = "mongodb://localhost:27017/";
+                    MongoClient.connect(url, { useNewUrlParser: true }, function(err, db) {
+                        if (err) throw err;
+                        const dbo = db.db("DiscordDB");
+                        dbo.collection("xps").deleteMany(myquery, function(err, obj) {
+                            if (err){ 
+                              throw err
+                            };
+                            db.close();
+                        });
+                    })
+                }else{
+                    const user = await message.guild.members.get(`${result[i].userID}`).user
+                
 
-                if(user != undefined && !user.bot) {
-                    embed.addField(`${numbers[order]} Username`, user.username, true)
-                    .addField('Total XP', result[i].xp);
-                    order++;
+                    if(user != undefined && !user.bot) {
+                        embed.addField(`${numbers[order]} Username`, user.username, true)
+                        .addField('Total XP', result[i].xp);
+                        order++;
+                    }
                 }
             }
 
