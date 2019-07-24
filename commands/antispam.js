@@ -6,6 +6,7 @@ const mongoose = require('mongoose')
 //const XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 
 exports.run = async (client, message, args) => {
+    if (!message.member.hasPermission("ADMINISTRATOR")) return message.reply("❌**Error:** You have to be an Admin to use this command!");
     if(!args) return message.reply("Usage: `antispam template|upload (file upload)`")
     if(args[0] === 'template'){
         message.channel.send("Here's the antilink settings template.", { files: ['./default.json'] });
