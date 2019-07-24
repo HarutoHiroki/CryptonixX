@@ -8,7 +8,41 @@ const dbl = new DBL(settings.dblapitoken, client);
 const fs = require('fs');
 const mongoose = require('mongoose');
 const music = require("../music");
+const antispam = require('discord-anti-spam');
 module.exports = client => {
+  const guildsid = require('../models/guild.js');
+    guildsid.find({
+      dbID: 333
+    }, (err, guildsid) => {
+      if (err) console.error(err);
+      if (!guildsid) {
+        return
+      }else{
+        const antispamstat = require('../models/antispam.js');
+        antispamstat.find({
+          guildID: guildsid.guildID
+        }, (err, antispamstat) => {
+          if (err) console.error(err);
+          if (!antispamstat || antispamstat.stats === 'off') {
+            return
+          }else{
+            antispam(client, {
+              warnBuffer: antispamstat.warnBuffer, // Maximum ammount of messages allowed to send in the interval time before getting warned.
+              maxBuffer: antispamstat.maxBuffer, // Maximum amount of messages allowed to send in the interval time before getting banned.
+              interval: antispamstat.maxtime, // Amount of time in ms users can send the maxim amount of messages(maxBuffer) before getting banned. 
+              warningMessage: antispamstat.warnMessage,//"please stop spamming!", // Message users receive when warned. (message starts with '@User, ' so you only need to input continue of it.) 
+              banMessage: antispamstat.banMessagem,//"has been hit by ban hammer for spamming!", // Message sent in chat when user is banned. (message starts with '@User, ' so you only need to input continue of it.) 
+              maxDuplicatesWarning: antispamstat.maxdupwarn,// Maximum amount of duplicate messages a user can send in a timespan before getting warned.
+              maxDuplicatesBan: antispamstat.maxdupban, // Maximum amount of duplicate messages a user can send in a timespan before getting banned.
+              deleteMessagesAfterBanForPastDays: antispamstat.deleteno, // Deletes the message history of the banned user in x days.
+              exemptRoles: [antispamstat.exeptionroles], // Name of roles (case sensitive) that are exempt from spam filter.
+              exemptUsers: ["HarutoHiroki#4000"] // The Discord tags of the users (e.g: MrAugu#9016) (case sensitive) that are exempt from spam filter.
+            });
+          }
+        })
+      }
+    })
+
   setInterval(() => {
     dbl.postStats(client.guilds.size);
   },300000);

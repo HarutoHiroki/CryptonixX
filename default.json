@@ -1,0 +1,14 @@
+{
+    "antispam":{
+        "status": on|off,
+        "warnBuffer": Number (default 2), 
+        "maxBuffer": Number (default 3),
+        "maxtime": Number (default 2000ms),
+        "warnMessage": String (default "please stop spamming!"),
+        "banMessage": String (default "has been hit by ban hammer for spamming!"),
+        "maxdupwarn": Number (default 3),
+        "maxdupban": Number (default 5),
+        "deleteno": Number (default 7 days),
+        "exeptionroles": "role1,role2,role3,..." (default "none")
+    }
+}
