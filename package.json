@@ -1,6 +1,6 @@
 {
   "name": "cryptonix-x-mod-bot",
-  "version": "3.8.0",
+  "version": "3.8.5",
   "description": "Mod Bot",
   "main": "index.js",
   "scripts": {
