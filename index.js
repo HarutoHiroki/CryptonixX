@@ -32,7 +32,17 @@ fs.readdir('./commands/', (err, files) => {
 });
 
 client.on('message', msg => {
-  client.emit('checkMessage', msg); 
+  const antispamstat = require('./models/antispam.js');
+  antispamstat.find({
+    guildID: msg.guild.id
+  }, (err, antispamstat) => {
+    if (err) console.error(err);
+    if (!antispamstat || antispamstat.stats === 'off') {
+      return
+    }else{
+    client.emit('checkMessage', msg);
+    }
+  })
 });
 
 client.on("guildCreate", guild => {

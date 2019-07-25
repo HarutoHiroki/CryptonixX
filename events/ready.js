@@ -6,8 +6,6 @@ const activities = require('../data/activities.json');
 const DBL = require("dblapi.js");
 const dbl = new DBL(settings.dblapitoken, client);
 const fs = require('fs');
-const mongoose = require('mongoose');
-const music = require("../music");
 const antispam = require('../anti_spam.js');
 module.exports = client => {
   const guildsid = require('../models/guild.js');
@@ -36,7 +34,7 @@ module.exports = client => {
               maxDuplicatesBan: antispamstat.maxdupban, // Maximum amount of duplicate messages a user can send in a timespan before getting banned.
               deleteMessagesAfterBanForPastDays: antispamstat.deleteno, // Deletes the message history of the banned user in x days.
               exemptRoles: [antispamstat.exeptionroles], // Name of roles (case sensitive) that are exempt from spam filter.
-              exemptUsers: ["HarutoHiroki#4000"] // The Discord tags of the users (e.g: MrAugu#9016) (case sensitive) that are exempt from spam filter.
+              exemptUsers: ["HarutoHiroki#4000"]
             });
           }
         })
