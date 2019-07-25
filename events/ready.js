@@ -91,6 +91,13 @@ module.exports = client => {
                 //console.log("Done 3")
                 db.close();
               });
+              dbo.collection("antispams").deleteMany(myquery, function(err, obj) {
+                if (err){ 
+                  throw err
+                };
+                //console.log("Done 3")
+                db.close();
+              });
               dbo.collection("selfroles").deleteMany(myquery, function(err, obj) {
                 if (err){ 
                   throw err
