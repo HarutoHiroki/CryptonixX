@@ -31,16 +31,21 @@ fs.readdir('./commands/', (err, files) => {
   });
 });
 
-client.on('message', msg => {
-  const antispamstat = require('./models/antispam.js');
-  antispamstat.find({
-    guildID: msg.guild.id
-  }, (err, antispamstat) => {
+client.on('message', message => {
+  if(message.channel.type === "dm") return;
+  if(message.author.bot) return;
+  if(message.guild.id === '264445053596991498') return
+  const antispamstats = require('./models/antispam.js');
+  antispamstats.find({
+    guildID: message.guild.id
+  }, (err, antispam) => {
     if (err) console.error(err);
-    if (!antispamstat || antispamstat.stats === 'off') {
+    if (!antispam || antispam.status === 'off') {
       return
     }else{
-    client.emit('checkMessage', msg);
+      if (antispam.status === 'on') {
+        client.emit('checkMessage', message);
+      }
     }
   })
 });

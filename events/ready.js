@@ -16,8 +16,8 @@ module.exports = client => {
       if (!guildsid) {
         return
       }else{
-        const antispamstat = require('../models/antispam.js');
-        antispamstat.find({
+        const data = require('../models/antispam.js');
+        data.find({
           guildID: guildsid.guildID
         }, (err, antispamstat) => {
           if (err) console.error(err);
@@ -34,7 +34,7 @@ module.exports = client => {
               maxDuplicatesBan: antispamstat.maxdupban, // Maximum amount of duplicate messages a user can send in a timespan before getting banned.
               deleteMessagesAfterBanForPastDays: antispamstat.deleteno, // Deletes the message history of the banned user in x days.
               exemptRoles: [antispamstat.exeptionroles], // Name of roles (case sensitive) that are exempt from spam filter.
-              exemptUsers: ["HarutoHiroki#4000"]
+              exemptUsers: []
             });
           }
         })

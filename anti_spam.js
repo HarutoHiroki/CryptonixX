@@ -31,13 +31,13 @@ module.exports = async (client, options) => {
 
       // Custom 'checkMessage' event that handles messages
       client.on("checkMessage", async (message) => {
-      const antispamstat = require('./models/antispam.js');
-      antispamstat.find({
+      const antispamstats = require('./models/antispam.js');
+      antispamstats.find({
         guildID: message.guild.id
-      }, (err, antispamstat) => {
+      }, (err, antispam) => {
         if (err) console.error(err);
-        if (!antispamstat || antispamstat.stats === 'off') {
-          return console.log('off')
+        if (!antispam || antispam.status === 'off') {
+          //return console.log('off')
       }else{
       // Ban the User
         const banUser = async (m, banMsg) => {
