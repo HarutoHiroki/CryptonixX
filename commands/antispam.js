@@ -18,7 +18,7 @@ exports.run = async (client, message, args) => {
         const request = https.get(message.attachments.first().url, async function(response) {
             await response.pipe(file);
             file.on(`finish`, async function() {
-              await file.close(console.log(`Done Downloading`));  // close() is async, call cb after close completes.
+              await file.close(message.channel.send("Recieved your config file!"));  // close() is async, call cb after close completes.
               let antidata = JSON.parse(fs.readFileSync(`./temp/${message.guild.id}.json`, "utf8"))
                 if(!antidata['antispam']){ 
                     message.reply('Please upload a proper/full settings file')
@@ -68,7 +68,7 @@ exports.run = async (client, message, args) => {
                             });
                             await newAntispam.save()
                             fs.unlink(`./temp/${message.guild.id}.json`, function(){
-                                console.log("File deleted, success!")
+                                message.channel.send("Successfully configured Anti-Spam")
                             })
                         }else{
                             antispamdat.status = antidata['antispam'].status,
@@ -83,7 +83,7 @@ exports.run = async (client, message, args) => {
                             antispamdat.exeptionroles = rolestr 
                             await antispamdat.save()
                             fs.unlink(`./temp/${message.guild.id}.json`, function(){
-                                console.log("File deleted, success!")
+                                message.channel.send("Successfully configured Anti-Spam")
                             })
                         }
                     })
@@ -124,7 +124,7 @@ exports.run = async (client, message, args) => {
             })
 
     }else{
-        return message.reply("Usage: `antispam template|upload (file upload)`")
+        return message.reply("Usage: `antispam template|upload|current (file upload)`")
     }
 };
 
