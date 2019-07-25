@@ -172,7 +172,7 @@ const Warn = require('../models/warn.js');
             message.channel.send(`:redTick: I cannot ban that member. My role might not be high enough or it's an internal error.`);
             return
           }
-          message.guild.ban(user).then(() => {
+          user.ban("AutoBan - User has too many warns").then(() => {
             let logchannel = message.guild.channels.find(val => val.name === 'logs');
             if(!logchannel){
               message.channel.send("***" + user.username + "***" + ` has been auto-banned for exeeding ${punish.ban} warns`)

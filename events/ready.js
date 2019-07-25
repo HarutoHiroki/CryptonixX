@@ -8,7 +8,7 @@ const dbl = new DBL(settings.dblapitoken, client);
 const fs = require('fs');
 const mongoose = require('mongoose');
 const music = require("../music");
-const antispam = require('discord-anti-spam');
+const antispam = require('../anti_spam.js');
 module.exports = client => {
   const guildsid = require('../models/guild.js');
     guildsid.find({

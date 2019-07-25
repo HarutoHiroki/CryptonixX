@@ -3,7 +3,6 @@ const customisation = require('../customisation.json');
 const https = require('https');
 const fs = require('fs')
 const mongoose = require('mongoose')
-//const XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 
 exports.run = async (client, message, args) => {
     if (!message.member.hasPermission("ADMINISTRATOR")) return message.reply("❌**Error:** You have to be an Admin to use this command!");
@@ -22,11 +21,14 @@ exports.run = async (client, message, args) => {
               await file.close(console.log(`Done Downloading`));  // close() is async, call cb after close completes.
               let antidata = JSON.parse(fs.readFileSync(`./temp/${message.guild.id}.json`, "utf8"))
                 if(!antidata['antispam']){ 
-                    return
+                    message.reply('Please upload a proper/full settings file')
+                    return fs.unlink(`./temp/${message.guild.id}.json`)
                 }else if(!antidata['antispam'].status || !antidata['antispam'].warnBuffer || !antidata['antispam'].maxBuffer || !antidata['antispam'].maxtime || !antidata['antispam'].maxdupwarn || !antidata['antispam'].maxdupban || !antidata['antispam'].deleteno || !antidata['antispam'].exeptionroles){
                     message.reply('Please upload a proper/full settings file')
                     return fs.unlink(`./temp/${message.guild.id}.json`)
                 }else if(parseInt(antidata['antispam'].status) == NaN || parseInt(antidata['antispam'].warnBuffer) == NaN || parseInt(antidata['antispam'].maxBuffer) == NaN || parseInt(antidata['antispam'].maxtime) == NaN || parseInt(antidata['antispam'].maxdupwarn) == NaN || parseInt(antidata['antispam'].maxdupban) == NaN || parseInt(antidata['antispam'].deleteno) == NaN){
+                    if(!antidata['antispam'].banMessage || String(antidata['antispam'].banMessage).length < 5) return message.reply("banMessage must be a string and have at least 5 charcters length.");
+                    if(!antidata['antispam'].warningMessage || String(antidata['antispam'].warningMessage).length < 5) return message.reply("warningMessage must be a string and have at least 5 characters.");
                     if (antidata['antispam'].exeptionroles !== 'none' && String(antidata['antispam'].exeptionroles).forEach(role => message.guild.roles.find(val => val.name === role) == undefined)) message.reply('Please check your role names again')
                     return fs.unlink(`./temp/${message.guild.id}.json`, function(err){
                         console.log(err)

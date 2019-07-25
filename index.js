@@ -31,6 +31,9 @@ fs.readdir('./commands/', (err, files) => {
   });
 });
 
+client.on('message', msg => {
+  client.emit('checkMessage', msg); 
+});
 
 client.on("guildCreate", guild => {
   let channelID;
@@ -43,6 +46,7 @@ client.on("guildCreate", guild => {
           break channelLoop;
       }
   }
+  
 
   let owner = guild.ownerID
   //console.log(owner)

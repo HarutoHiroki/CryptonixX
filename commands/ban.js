@@ -29,7 +29,7 @@ exports.run = (client, message, args) => {
     .addField('Moderator:', `${message.author.username}#${message.author.discriminator}`)
     .addField('Reason', reason)
     .setFooter(`© Cryptonix X Mod Bot by ${customisation.ownername}`);
-    message.guild.ban(user)
+    user.ban(reason)
     let logchannel = message.guild.channels.find(val => val.name === 'logs');
   if  (!logchannel){
     message.channel.send({embed})
