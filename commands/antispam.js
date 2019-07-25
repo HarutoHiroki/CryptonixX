@@ -18,7 +18,7 @@ exports.run = async (client, message, args) => {
         const request = https.get(message.attachments.first().url, async function(response) {
             await response.pipe(file);
             file.on(`finish`, async function() {
-              await file.close(message.channel.send("Recieved your config file!"));  // close() is async, call cb after close completes.
+              await file.close(console.log(`Done Downloading`));  // close() is async, call cb after close completes.
               let antidata = JSON.parse(fs.readFileSync(`./temp/${message.guild.id}.json`, "utf8"))
                 if(!antidata['antispam']){ 
                     message.reply('Please upload a proper/full settings file')
