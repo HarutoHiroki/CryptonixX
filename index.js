@@ -35,6 +35,7 @@ client.on('message', message => {
   if(message.channel.type === "dm") return;
   if(message.author.bot) return;
   if(message.guild.id === '264445053596991498') return
+  if(message.guild.id === '110373943822540800') return
   const antispamstats = require('./models/antispam.js');
   antispamstats.find({
     guildID: message.guild.id
@@ -67,7 +68,7 @@ client.on("guildCreate", guild => {
   //console.log(owner)
   if(owner !== settings.ownerid){
     if(guild.id === '264445053596991498') return
-    if(guild.id !== '597481031364509728') {
+    if(guild.id !== '597481031364509728' && message.guild.id !== '110373943822540800') {
       let channel = client.channels.get(guild.systemChannelID || channelID);
     let botCount = client.guilds.get(guild.id).members.filter(m => m.user.bot).size
     //console.log(botCount)
