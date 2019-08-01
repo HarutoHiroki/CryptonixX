@@ -7,13 +7,13 @@
     "Next, if you want to have modlog on (which is highly recommended), you need to create a channel named #logs. After that, modlog will be enabled, no additional commands needed."
   ],
   "infoMsg2": [
-    "Then, you need to invite the bot! Here's an invite link. https://discordapp.com/api/oauth2/authorize?client_id=482128001828651008&permissions=8&scope=bot",
+    "Then, you need to invite the bot! Here's an invite link. https://discordapp.com/oauth2/authorize?client_id=482128001828651008&permissions=536210935&scope=bot",
     "Once you've done that, do `/help` to see all the commands that the bot has for you."
   ],
   "infoMsg3": [
     "DiscordBots Site: https://discordbots.org/bot/482128001828651008",
     "To-Do List: Listening to Suggestions and fixing reported bugs! Do /suggest <suggestion> if you have any suggestions or /bug <bug> if you found any bugs. Thanks.",
-    "Support Server: https://discord.gg/2NQbbPN",
-    "Bot Website: https://harutohiroki.github.io/"
+    "Support Server: https://discord.gg/mae4bWx",
+    "Bot Website: https://harutohiroki.github.io/ or http://the-person-next-to-me.farted.net or http://i-dont-want-to.undo.it"
   ]
 }
