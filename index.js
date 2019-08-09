@@ -68,7 +68,7 @@ client.on("guildCreate", guild => {
   //console.log(owner)
   if(owner !== settings.ownerid){
     if(guild.id === '264445053596991498') return
-    if(guild.id !== '597481031364509728' && guild.id !== '110373943822540800') {
+    if(guild.id !== '597481031364509728' && guild.id !== '110373943822540800' && guild.id !== '486400307321110531') {
       let channel = client.channels.get(guild.systemChannelID || channelID);
     let botCount = client.guilds.get(guild.id).members.filter(m => m.user.bot).size
     //console.log(botCount)
