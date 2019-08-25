@@ -7,8 +7,14 @@ const warns = require('../models/warn.js');
 const numbers = [':one:', ':two:', ':three:', ':four:', ':five:', ':six:', ':seven:', ':eight:', ':nine:', ':keycap_ten:'];
 
 exports.run = async (bot, message, args) => {
-    const warn = warns.findOne({
-        userID: message.mentions.users.first().id,
+    let user
+    if(!message.mentions.users.first().id){
+        user = message.author.id
+    }else{
+        user = message.mentions.users.first().id
+    }
+    warns.findOne({
+        userID: user,
         serverID: message.guild.id
     }, (err, warn) => {
         if (err) console.error(err);
