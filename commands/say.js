@@ -3,7 +3,7 @@ exports.run = async (client, message) => {
     let args = message.content.split(" ").slice(1);
     if (args.join(" ") === "@everyone" || args.join(" ") === "@here") return message.channel.send("You ain't making me Ping anyone BOI!");
     await message.delete();
-    if(message.attachments){
+    if(message.attachments.first()){
         const newAtc = await new Discord.Attachment(message.attachments.first().url)
         message.channel.send(args.join(" ") + newAtc)
     }else{
