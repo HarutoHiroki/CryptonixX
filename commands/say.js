@@ -2,10 +2,12 @@ exports.run = async (client, message) => {
     const Discord = require('discord.js')
     let args = message.content.split(" ").slice(1);
     if (args.join(" ") === "@everyone" || args.join(" ") === "@here") return message.channel.send("You ain't making me Ping anyone BOI!");
-    await message.delete();
     if(message.attachments.first()){
-        message.channel.send(`${args.join(" ")}`, {file: message.attachments.first().url})
+        const link = message.attachments.first().url;
+        message.delete();
+        message.channel.send(`${args.join(" ")}`, {file: link})
     }else{
+        message.delete();
         message.channel.send(args.join(" "));
     }
 };
