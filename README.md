@@ -7,3 +7,4 @@ rewrite version but hey, I forgot :3 Anyways, if this pile of hot garbage can he
 Tho i would be very grateful if you add a small line of credit ;)
 
 ### For Discord v11, won't work with v12
+#### oh and the tokens in settings.json is deprecated you nasty people that tried those out...
