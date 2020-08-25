@@ -8,3 +8,5 @@ Tho i would be very grateful if you add a small line of credit ;)
 
 ### For Discord v11, won't work with v12
 #### oh and the tokens in settings.json is deprecated you nasty people that tried those out...
+<br>
+Disclaimer: I won't provide support for this repo, you are on your own to explore kthx.
